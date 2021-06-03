@@ -18,8 +18,7 @@ def add_intercept(x):
         new_x: Uma nova matriz, semelhante a x, com 1's na coluna 0.
     """
     m, n = x.shape
-    new_x = np.zeros((m, n+1), dtype=x.dtype)
-    new_x[:, 0] = 1
+    new_x = np.ones((m, n+1), dtype=x.dtype)
     new_x[:, 1:] = x
 
     return new_x
