@@ -19,11 +19,11 @@ class LinearModel(object):
 
 
     def fit(self, x, y):
-        """Ajusta o modelo de acordo com os dados de treinamento fornecidos.
+        """Ajusta o modelo de acordo com os dados de treinamento.
 
         Args:
-            x: Conjunto de dados treinamento. Dimensão (m, n).
-            y: Rótulos de cada exemplo em x. Dimensão (m,).
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).
         """
         raise NotImplementedError(
             'Subclasses de LinearModel devem implementar o método fit.')
@@ -33,24 +33,24 @@ class LinearModel(object):
         """Faz previsões para um conjunto de dados x.
         
         Args:
-            x: Conjunto de dados. Dimensão (m, n).
+            x: Conjunto de dados. Dim (m, n).
         
         Returns:
-            Previsão para cada exemplo em x. Dimensão (m,).
+            h_x: Previsão para cada exemplo em x. Dim (m,).
         """
         raise NotImplementedError(
             'Subclasses de LinearModel devem implementar o método predict.')
     
 
-    def loss(y, y_hat):
+    def loss(y, h_x):
         """Uma função que mede a performace do modelo.
 
         Args:
-            y: Valores alvo.
-            y_hat: Valores previsto.
+            y: Valores alvo. Dim (m,).
+            h_x: Valores previsto. Dim (m,).
         
         Returns:
-            O quão perto y_hat está de y.
+            J: O quão perto h_x está de y. Escalar.
         """
         raise NotImplementedError(
             'Subclasses de LinearModel devem implementar o método loss.')

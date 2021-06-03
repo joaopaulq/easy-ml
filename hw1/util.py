@@ -12,14 +12,13 @@ def add_intercept(x):
     """Adiciona o termo de interseção a matriz x.
 
     Args:
-        x: Um array NumPy 2D.
+        x: Um array NumPy 2D. Dim (m, n).
     
     Returns:
-        new_x: Uma nova matriz, semelhante a x, com 1's na coluna 0.
+        new_x: Um novo array semelhante a x com 1's na coluna 0. Dim (m, n+1).
     """
     m, n = x.shape
-    new_x = np.zeros((m, n+1), dtype=x.dtype)
-    new_x[:, 0] = 1
+    new_x = np.ones((m, n+1), dtype=x.dtype)
     new_x[:, 1:] = x
 
     return new_x

@@ -13,22 +13,21 @@ class LinearRegression(LinearModel):
     """
 
     def fit(self, x, y):
-        """Ajusta o modelo de acordo com os dados de treinamento fornecidos.
+        """Ajusta o modelo de acordo com os dados de treinamento.
 
         Args:
-            x: Conjunto de dados treinamento. Dimensão (m, n).
-            y: Rótulos de cada exemplo em x. Dimensão (m,).
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).
         """
         # *** START CODE HERE ***
-        _, n = x.shape
-
         if self.theta is None:
-            self.theta = np.zeros(n)
+            _, n = x.shape
+            self.theta = np.zeros((n, 1))
 
         for i in range(self.max_iter):
             h_x = self.predict(x)
             J = self.loss(y, h_x)
-            dJ = np.dot(h_x - y, x.T)
+            dJ = x.T @ (h_x - y)
             theta_prev = self.theta
             self.theta = self.theta - self.lr*dJ
             
@@ -44,27 +43,27 @@ class LinearRegression(LinearModel):
         """Faz previsões para um conjunto de dados x.
         
         Args:
-            x: Conjunto de dados. Dimensão (m, n).
+            x: Conjunto de dados. Dim (m, n).
         
         Returns:
-            Previsão para cada exemplo em x. Dimensão (m,).
+            h_x: Previsão para cada exemplo em x. Dim (m,).
         """
         # *** START CODE HERE ***
-        return np.dot(self.theta.T, x)
+        return x @ self.theta
         # *** END CODE HERE ***
     
 
-    def loss(y, y_hat):
+    def loss(y, h_x):
         """Uma função que mede a performace do modelo.
 
         Args:
-            y: Valores alvo.
-            y_hat: Valores previsto.
+            y: Valores alvo. Dim (m,).
+            h_x: Valores previsto. Dim (m,).
         
         Returns:
-            O quão perto y_hat está de y.
+            J: O quão perto h_x está de y. Escalar.
         """
         # *** START CODE HERE ***
         # Least squares error.
-        return 0.5 * np.linalg.norm(y_hat - y)
+        return 0.5 * np.linalg.norm(h_x - y)
         # *** END CODE HERE ***
