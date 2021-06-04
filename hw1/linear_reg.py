@@ -22,8 +22,8 @@ class LinearRegression(LinearModel):
         # *** START CODE HERE ***
         if self.theta is None:
             _, n = x.shape
-            self.theta = np.zeros((n, 1))
-
+            self.theta = np.zeros(n)
+            
         for i in range(self.max_iter):
             h_x = self.predict(x)
             J = self.loss(y, h_x)
@@ -34,7 +34,7 @@ class LinearRegression(LinearModel):
             if np.allclose(self.theta, theta_prev, atol=self.eps):
                 break
 
-            if self.verbose and i % 10:
+            if self.verbose and i % 10 == 0:
                 print(f"Perda na iteração {i}: {J}")
         # *** END CODE HERE ***
 
@@ -53,7 +53,7 @@ class LinearRegression(LinearModel):
         # *** END CODE HERE ***
     
 
-    def loss(y, h_x):
+    def loss(self, y, h_x):
         """Uma função que mede a performace do modelo.
 
         Args:

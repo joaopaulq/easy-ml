@@ -42,8 +42,8 @@ class LinearModel(object):
             'Subclasses de LinearModel devem implementar o método predict.')
     
 
-    def loss(y, h_x):
-        """Uma função que mede a performace do modelo.
+    def loss(self, y, h_x):
+        """Função que mede a performace do modelo.
 
         Args:
             y: Valores alvo. Dim (m,).

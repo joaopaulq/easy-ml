@@ -27,7 +27,7 @@ class Perceptron(LinearModel):
         for i in range(self.max_iter):
             h_x = self.predict(x)
             J = self.loss(y, h_x)
-            dJ = (y - h_x) @ x.T
+            dJ = x.T @ (y - h_x)
             theta_prev = self.theta
             self.theta = self.theta + self.lr*dJ
             

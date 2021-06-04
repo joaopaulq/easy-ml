@@ -28,7 +28,7 @@ class LogisticRegression(LinearModel):
         for i in range(self.max_iter):
             h_x = self.predict(x)
             J = self.loss(y, h_x)
-            dJ = (y - h_x) @ x.T
+            dJ = x.T @ (y - h_x)
             theta_prev = self.theta
             self.theta = self.theta + self.lr*dJ
             
@@ -51,12 +51,11 @@ class LogisticRegression(LinearModel):
         """
         # *** START CODE HERE ***
         z = x @ self.theta
-        h_x = sigmoid(z)
-        return np.where(h_x >= 0.5, 1, 0)
+        return sigmoid(z)
         # *** END CODE HERE ***
     
 
-    def loss(y, h_x):
+    def loss(self, y, h_x):
         """Uma função que mede a performace do modelo.
 
         Args:
@@ -68,5 +67,5 @@ class LogisticRegression(LinearModel):
         """
         # *** START CODE HERE ***
         # Cross-entropy loss function.
-        return np.sum(y*np.log(h_x) + (1-h_x)*np.log(1-h_x)) 
+        return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x)) 
         # *** END CODE HERE ***
