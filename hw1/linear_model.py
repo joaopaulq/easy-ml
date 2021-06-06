@@ -5,8 +5,8 @@ class LinearModel(object):
                  eps=1e-5, theta_0=None, verbose=True):
         """
         Args:
-            lr: Taxa de aprendizagem.
             solver: Método de ajuste.
+            lr: Taxa de aprendizagem.
             max_iter: Número máximo de iterações.
             eps: Limiar para determinar convergência.
             theta_0: Estimativa inicial para theta. Se "None", usa o vetor zero.
