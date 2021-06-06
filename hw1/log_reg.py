@@ -30,7 +30,7 @@ class LogisticRegression(LinearModel):
         if self.solver is None or self.solver == "newton":
             self.newtons_method(x, y) 
         elif self.solver == "gradient":
-            self.gradient_descent(x, y)
+            self.gradient_ascent(x, y)
         else:
             raise NotImplementedError(f"Método {self.solver} não implementado.")
 
