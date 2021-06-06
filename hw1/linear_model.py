@@ -1,20 +1,22 @@
 class LinearModel(object):
     """Classe base para os modelos lineares."""
 
-    def __init__(self, lr=0.2, max_iter=100, eps=1e-5,
-                 theta_0=None, verbose=True):
+    def __init__(self, solver=None, lr=0.2, max_iter=100,
+                 eps=1e-5, theta_0=None, verbose=True):
         """
         Args:
             lr: Taxa de aprendizagem.
+            solver: Método de ajuste.
             max_iter: Número máximo de iterações.
             eps: Limiar para determinar convergência.
             theta_0: Estimativa inicial para theta. Se "None", usa o vetor zero.
             verbose: Printa o valor da perda durante o treinamento.
         """
-        self.theta = theta_0
+        self.solver = solver
         self.lr = lr
         self.max_iter = max_iter
         self.eps = eps
+        self.theta = theta_0
         self.verbose = verbose
 
 

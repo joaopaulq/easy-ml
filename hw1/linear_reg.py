@@ -19,11 +19,41 @@ class LinearRegression(LinearModel):
             x: Conjunto de dados treinamento. Dim (m, n).
             y: Rótulos de cada exemplo em x. Dim (m,).
         """
-        # *** START CODE HERE ***
+        _, n = x.shape
+
         if self.theta is None:
-            _, n = x.shape
             self.theta = np.zeros(n)
-            
+        else:
+            assert self.theta.shape == n
+
+        if self.solver is None or self.solver == "lstsq":
+            self.least_squares(x, y)
+        elif self.solver == "gradient":
+            self.gradient_descent(x, y)
+        else:
+            raise NotImplementedError(f"Método {self.solver} não implementado.")
+
+    
+    def least_squares(self, x, y):
+        """Método dos mínimos quadrados.
+       
+        Args:
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).        
+        """
+        inv = np.linalg.pinv(x.T @ x)
+        self.theta = inv @ x.T @ y
+        
+    
+    def gradient_descent(self, x, y):
+        """Método de gradiente descendente.
+       
+        Args:
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).        
+        """ 
+        assert self.max_iter >= 0 and self.lr > 0
+
         for i in range(self.max_iter):
             h_x = self.predict(x)
             J = self.loss(y, h_x)
@@ -36,7 +66,6 @@ class LinearRegression(LinearModel):
 
             if self.verbose and i % 10 == 0:
                 print(f"Perda na iteração {i}: {J}")
-        # *** END CODE HERE ***
 
 
     def predict(self, x):
@@ -48,9 +77,7 @@ class LinearRegression(LinearModel):
         Returns:
             h_x: Previsão para cada exemplo em x. Dim (m,).
         """
-        # *** START CODE HERE ***
         return x @ self.theta
-        # *** END CODE HERE ***
     
 
     def loss(self, y, h_x):
@@ -63,7 +90,5 @@ class LinearRegression(LinearModel):
         Returns:
             J: O quão perto h_x está de y. Escalar.
         """
-        # *** START CODE HERE ***
         # Least squares error.
         return 0.5 * np.linalg.norm(h_x - y)
-        # *** END CODE HERE ***

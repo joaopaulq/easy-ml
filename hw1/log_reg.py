@@ -20,10 +20,29 @@ class LogisticRegression(LinearModel):
             x: Conjunto de dados treinamento. Dim (m, n).
             y: Rótulos de cada exemplo em x. Dim (m,).
         """
-        # *** START CODE HERE ***
+        _, n = x.shape
+
         if self.theta is None:
-            _, n = x.shape
             self.theta = np.zeros(n)
+        else:
+            assert self.theta.shape == n
+
+        if self.solver is None or self.solver == "newton":
+            self.newtons_method(x, y) 
+        elif self.solver == "gradient":
+            self.gradient_descent(x, y)
+        else:
+            raise NotImplementedError(f"Método {self.solver} não implementado.")
+
+
+    def gradient_ascent(self, x, y):
+        """Método de gradiente ascendente.
+       
+        Args:
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).        
+        """
+        assert self.max_iter >= 0 and self.lr > 0
 
         for i in range(self.max_iter):
             h_x = self.predict(x)
@@ -37,7 +56,16 @@ class LogisticRegression(LinearModel):
 
             if self.verbose and i % 10:
                 print(f"Perda na iteração {i}: {J}")
-        # *** END CODE HERE ***
+    
+
+    def newtons_method(self, x, y):
+        """Método de Newton-Raphson.
+       
+        Args:
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).        
+        """
+        pass 
 
 
     def predict(self, x):
@@ -49,10 +77,8 @@ class LogisticRegression(LinearModel):
         Returns:
             h_x: Previsão para cada exemplo em x. Dim (m,).
         """
-        # *** START CODE HERE ***
         z = x @ self.theta
         return sigmoid(z)
-        # *** END CODE HERE ***
     
 
     def loss(self, y, h_x):
@@ -65,7 +91,5 @@ class LogisticRegression(LinearModel):
         Returns:
             J: O quão perto h_x está de y. Escalar.
         """
-        # *** START CODE HERE ***
         # Cross-entropy loss function.
-        return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x)) 
-        # *** END CODE HERE ***
+        return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x))
