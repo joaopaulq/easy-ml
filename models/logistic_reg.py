@@ -1,7 +1,7 @@
 import numpy as np 
 
-from util import sigmoid 
-from linear_model import LinearModel 
+from models.util import sigmoid 
+from models.linear_model import LinearModel 
 
 
 class LogisticRegression(LinearModel):
@@ -20,19 +20,24 @@ class LogisticRegression(LinearModel):
             x: Conjunto de dados treinamento. Dim (m, n).
             y: Rótulos de cada exemplo em x. Dim (m,).
         """
-        _, n = x.shape
+        self.theta = np.zeros(x.shape[1])
 
-        if self.theta is None:
-            self.theta = np.zeros(n)
-        else:
-            assert self.theta.shape == n
-
-        if self.solver is None or self.solver == "newton":
+        if self.solver is None or self.solver == 'newton':
             self.newtons_method(x, y) 
-        elif self.solver == "gradient":
+        elif self.solver == 'gradient':
             self.gradient_ascent(x, y)
         else:
             raise NotImplementedError(f"Método {self.solver} não implementado.")
+
+
+    def newtons_method(self, x, y):
+        """Método de Newton-Raphson.
+       
+        Args:
+            x: Conjunto de dados treinamento. Dim (m, n).
+            y: Rótulos de cada exemplo em x. Dim (m,).        
+        """
+        pass 
 
 
     def gradient_ascent(self, x, y):
@@ -58,16 +63,6 @@ class LogisticRegression(LinearModel):
                 print(f"Perda na iteração {i}: {J}")
     
 
-    def newtons_method(self, x, y):
-        """Método de Newton-Raphson.
-       
-        Args:
-            x: Conjunto de dados treinamento. Dim (m, n).
-            y: Rótulos de cada exemplo em x. Dim (m,).        
-        """
-        pass 
-
-
     def predict(self, x):
         """Faz previsões para um conjunto de dados x.
         
@@ -91,5 +86,5 @@ class LogisticRegression(LinearModel):
         Returns:
             J: O quão perto h_x está de y. Escalar.
         """
-        # Cross-entropy loss function.
+        # Perda de entropia cruzada.
         return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x))

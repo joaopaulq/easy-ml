@@ -3,12 +3,12 @@ import numpy as np
 
 def sigmoid(z):
     """Computa a função sigmoid de um array NumPy 1D."""
-    return 1 / (1 + np.exp(-z))
-    
+    return 1.0 / (1 + np.exp(-z))
+
 
 def add_intercept(x):
     """Adiciona o termo de interseção a matriz x.
-
+    
     Args:
         x: Um array NumPy 2D. Dim (m, n).
     

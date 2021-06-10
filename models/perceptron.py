@@ -1,6 +1,6 @@
 import numpy as np 
 
-from linear_model import LinearModel 
+from models.linear_model import LinearModel
 
 
 class Perceptron(LinearModel):
@@ -19,14 +19,9 @@ class Perceptron(LinearModel):
             x: Conjunto de dados treinamento. Dim (m, n).
             y: Rótulos de cada exemplo em x. Dim (m,).
         """
-        _, n = x.shape
+        self.theta = np.zeros(x.shape[1])
 
-        if self.theta is None:
-            self.theta = np.zeros(n)
-        else:
-            assert self.theta.shape == n
-
-        if self.solver is None or self.solver == "gradient":
+        if self.solver is None or self.solver == 'gradient':
             self.gradient_ascent(x, y)
         else:
             raise NotImplementedError(f"Método {self.solver} não implementado.")            
@@ -68,7 +63,7 @@ class Perceptron(LinearModel):
         return np.where(h_x >= 0, 1, 0)
 
 
-    def loss(y, h_x):
+    def loss(self, y, h_x):
         """Uma função que mede a performace do modelo.
     
         Args:
@@ -78,5 +73,5 @@ class Perceptron(LinearModel):
         Returns:
             J: O quão perto h_x está de y. Escalar.
         """
-        # 0-1 loss function.
+        # Perda 0-1.
         return np.sum(y == h_x)
