@@ -2,18 +2,18 @@ import numpy as np
 
 
 def sigmoid(z):
-    """Computa a função sigmoid de um array NumPy 1D."""
+    """Computes the sigmoid function on a 1D NumPy array."""
     return 1.0 / (1 + np.exp(-z))
 
 
 def add_intercept(x):
-    """Adiciona o termo de interseção a matriz x.
+    """Add intercept to matrix x.
     
     Args:
-        x: Um array NumPy 2D. Dim (m, n).
+        x: 2D NumPy array.
     
     Returns:
-        new_x: Uma nova matriz, semelhante a x, com 1's na col 0. Dim (m, n+1).
+        new_x: New matrix, same as x, with 1's in the 0th column.
     """
     m, n = x.shape
     new_x = np.ones((m, n+1), dtype=x.dtype)

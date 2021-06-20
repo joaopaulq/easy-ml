@@ -1,24 +1,19 @@
 import numpy as np 
 
-from models.linear_model import LinearModel
+from linear_model import LinearModel
 
 
 class Perceptron(LinearModel):
-    """Classe para o modelo Perceptron.
-   
-    Exemplo de uso:
+    """Class for the perceptron model.
+    
+    Example usage:
         > clf = Perceptron()
         > clf.fit(x_train, y_train)
         > clf.predict(x_valid)
     """
 
     def fit(self, x, y):
-        """Ajusta o modelo de acordo com os dados de treinamento.
-
-        Args:
-            x: Conjunto de dados treinamento. Dim (m, n).
-            y: Rótulos de cada exemplo em x. Dim (m,).
-        """
+        """Run solver to fit linear model."""
         self.theta = np.zeros(x.shape[1])
 
         if self.solver is None or self.solver == 'gradient':
@@ -28,11 +23,11 @@ class Perceptron(LinearModel):
 
 
     def gradient_ascent(self, x, y):
-        """Método de gradiente ascendente.
-       
+        """Run the gradient ascent algorithm.
+
         Args:
-            x: Conjunto de dados treinamento. Dim (m, n).
-            y: Rótulos de cada exemplo em x. Dim (m,).        
+            x: Training example inputs. Shape (m, n).
+            y: Training example labels. Shape (m,).
         """
         assert self.max_iter >= 0 and self.lr > 0
 
@@ -51,27 +46,12 @@ class Perceptron(LinearModel):
 
 
     def predict(self, x):
-        """Faz previsões para um conjunto de dados x.
-        
-        Args:
-            x: Conjunto de dados. Dim (m, n).
-        
-        Returns:
-            h_x: Previsão para cada exemplo em x. Dim (m,).
-        """
+        """Make a prediction given new inputs x."""
         h_x = x @ self.theta
         return np.where(h_x >= 0, 1, 0)
 
 
     def loss(self, y, h_x):
-        """Uma função que mede a performace do modelo.
-    
-        Args:
-            y: Valores alvo. Dim (m,).
-            h_x: Valores previsto. Dim (m,).
-        
-        Returns:
-            J: O quão perto h_x está de y. Escalar.
-        """
-        # Perda 0-1.
+        """Function that measures the quality of the model."""
+        # 0-1 loss.
         return np.sum(y == h_x)

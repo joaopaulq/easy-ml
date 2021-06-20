@@ -1,25 +1,20 @@
 import numpy as np 
 
-from models.util import sigmoid 
-from models.linear_model import LinearModel 
+from util import sigmoid 
+from linear_model import LinearModel 
 
 
 class LogisticRegression(LinearModel):
-    """Classe para o modelo Regressão Logística.
+    """Class for the logistic regression model.
     
-    Exemplo de uso:
+    Example usage:
         > clf = LogisticRegression()
         > clf.fit(x_train, y_train)
         > clf.predict(x_valid)
     """
 
     def fit(self, x, y):
-        """Ajusta o modelo de acordo com os dados de treinamento.
-
-        Args:
-            x: Conjunto de dados treinamento. Dim (m, n).
-            y: Rótulos de cada exemplo em x. Dim (m,).
-        """
+        """Run solver to fit linear model."""
         self.theta = np.zeros(x.shape[1])
 
         if self.solver is None or self.solver == 'newton':
@@ -31,21 +26,21 @@ class LogisticRegression(LinearModel):
 
 
     def newtons_method(self, x, y):
-        """Método de Newton-Raphson.
-       
+        """Run the Newton-Raphson method.
+
         Args:
-            x: Conjunto de dados treinamento. Dim (m, n).
-            y: Rótulos de cada exemplo em x. Dim (m,).        
+            x: Training example inputs. Shape (m, n).
+            y: Training example labels. Shape (m,).
         """
         pass 
 
 
     def gradient_ascent(self, x, y):
-        """Método de gradiente ascendente.
-       
+        """Run the gradient ascent algorithm.
+
         Args:
-            x: Conjunto de dados treinamento. Dim (m, n).
-            y: Rótulos de cada exemplo em x. Dim (m,).        
+            x: Training example inputs. Shape (m, n).
+            y: Training example labels. Shape (m,).
         """
         assert self.max_iter >= 0 and self.lr > 0
 
@@ -60,31 +55,16 @@ class LogisticRegression(LinearModel):
                 break
 
             if self.verbose and i % 10:
-                print(f"Perda na iteração {i}: {J}")
+                print(f"Loss on iteration {i}: {J}")
     
 
     def predict(self, x):
-        """Faz previsões para um conjunto de dados x.
-        
-        Args:
-            x: Conjunto de dados. Dim (m, n).
-        
-        Returns:
-            h_x: Previsão para cada exemplo em x. Dim (m,).
-        """
+        """Make a prediction given new inputs x. """
         z = x @ self.theta
         return sigmoid(z)
     
 
     def loss(self, y, h_x):
-        """Uma função que mede a performace do modelo.
-
-        Args:
-            y: Valores alvo. Dim (m,).
-            h_x: Valores previsto. Dim (m,).
-        
-        Returns:
-            J: O quão perto h_x está de y. Escalar.
-        """
-        # Perda de entropia cruzada.
+        """Function that measures the quality of the model."""
+        # Cross-entropy loss.
         return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x))
