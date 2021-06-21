@@ -19,7 +19,7 @@ class LinearRegression(LinearModel):
         if self.solver is None or self.solver == 'lstsq':
             self.least_squares(x, y)
         else:
-            raise NotImplementedError(f"Método {self.solver} não implementado.")
+            raise NotImplementedError(f"Method {self.solver} not implemented.")
 
     
     def least_squares(self, x, y):

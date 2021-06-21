@@ -19,7 +19,7 @@ class Perceptron(LinearModel):
         if self.solver is None or self.solver == 'gradient':
             self.gradient_ascent(x, y)
         else:
-            raise NotImplementedError(f"Método {self.solver} não implementado.")            
+            raise NotImplementedError(f"Method {self.solver} not implemented.")
 
 
     def gradient_ascent(self, x, y):
