@@ -1,29 +1,16 @@
 class LinearModel(object):
     """Base class for linear models."""
 
-    def __init__(self, solver=None, lr=0.2, max_iter=100,
-                 eps=1e-5, verbose=True):
-        """
-        Args:
-            solver: Fit method.
-            lr: Learning rate for iterative solvers only.
-            max_iter: Maximum number of iterations for the solver.
-            eps: Threshold for determining convergence.
-            verbose: Print loss values during training.
-        """
-        self.solver = solver
-        self.lr = lr
-        self.max_iter = max_iter
-        self.eps = eps
-        self.verbose = verbose
-
-
-    def fit(self, x, y):
+    def fit(self, x, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
         """Run solver to fit linear model.
 
         Args:
             x: Training example inputs. Shape (m, n).
             y: Training example labels. Shape (m,).
+            lr: The learning rate.
+            max_iter: Maximum number of iterations.
+            eps: Threshold for determining convergence.
+            verbose: Print loss values during training.
         """
         raise NotImplementedError(
             'Subclass of LinearModel must implement fit method.')

@@ -5,44 +5,29 @@ from linear_model import LinearModel
 
 class Perceptron(LinearModel):
     """Class for the perceptron model.
-    
+       
     Example usage:
         > clf = Perceptron()
         > clf.fit(x_train, y_train)
         > clf.predict(x_valid)
     """
 
-    def fit(self, x, y):
-        """Run solver to fit linear model."""
+    def fit(self, x, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
+        """Run the gradient ascent algorithm."""
         self.theta = np.zeros(x.shape[1])
-
-        if self.solver is None or self.solver == 'gradient':
-            self.gradient_ascent(x, y)
-        else:
-            raise NotImplementedError(f"Method {self.solver} not implemented.")
-
-
-    def gradient_ascent(self, x, y):
-        """Run the gradient ascent algorithm.
-
-        Args:
-            x: Training example inputs. Shape (m, n).
-            y: Training example labels. Shape (m,).
-        """
-        assert self.max_iter >= 0 and self.lr > 0
-
-        for i in range(self.max_iter):
+        
+        for i in range(max_iter):
             h_x = self.predict(x)
             J = self.loss(y, h_x)
             dJ = x.T @ (y - h_x)
             theta_prev = self.theta
-            self.theta = self.theta + self.lr*dJ
+            self.theta = self.theta + lr*dJ
             
-            if np.allclose(self.theta, theta_prev, atol=self.eps):
+            if np.allclose(self.theta, theta_prev, atol=eps):
                 break
 
-            if self.verbose and i % 10:
-                print(f"Perda na iteração {i}: {J}")
+            if verbose and i % 10:
+                print(f"Loss on iteration {i}: {J}")
 
 
     def predict(self, x):
@@ -52,6 +37,5 @@ class Perceptron(LinearModel):
 
 
     def loss(self, y, h_x):
-        """Function that measures the quality of the model."""
-        # 0-1 loss.
+        """Calculate the 0-1 loss."""
         return np.sum(y == h_x)
