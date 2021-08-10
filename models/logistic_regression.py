@@ -1,10 +1,9 @@
 import numpy as np 
 
 from util import sigmoid 
-from linear_model import LinearModel 
 
 
-class LogisticRegression(LinearModel):
+class LogisticRegression(object):
     """Class for the logistic regression model.
            
     Example usage:
@@ -19,11 +18,27 @@ class LogisticRegression(LinearModel):
 
 
     def predict(self, x):
-        """Make a prediction given new inputs x."""
+        """Make a prediction given new inputs x.
+        
+        Args:
+            x: Inputs of shape (m, n).
+        
+        Returns:
+            h_x: Predictions of shape (m,).
+        """
         z = x @ self.theta
         return sigmoid(z)
     
 
     def loss(self, y, h_x):
-        """Calculate the cross-entropy loss."""
+        """Function that measures the quality of the model.
+
+        Args:
+            y: Targets values of shape (m,).
+            h_x: Predict values of shape (m,).
+        
+        Returns:
+            J: How close the h_x are to the corresponding y. Scalar.
+        """
+        # Cross-Entropy loss.
         return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x))
