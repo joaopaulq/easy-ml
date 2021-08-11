@@ -21,7 +21,7 @@ class KMeans(object):
 
 
     def fit(self, X, max_iter=100):
-        """Run the K-Means algorithm
+        """Run the K-Means algorithm.
         
         Args:
             X: Training example inputs of shape (m, n).
