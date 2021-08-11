@@ -47,18 +47,18 @@ class KMeans(object):
                     )
 
                 if np.allclose(centroids, prev_centroids):
-                    distortion = 0 
-                    for idx, data in enumerate(X):
-                        u = C[idx]
-                        distortion += self._dist(data, centroids[u])
-                    
-                    if distortion < lowest_distortion:
-                        self.centroids = centroids
-                        self.C = C
-                        lowest_distortion = distortion
-
                     break
-
+            
+            distortion = 0 
+            for idx, data in enumerate(X):
+                u = C[idx]
+                distortion += self._dist(data, centroids[u])
+                    
+            if distortion < lowest_distortion:
+                self.centroids = centroids
+                self.C = C
+                lowest_distortion = distortion
+    
     
     def labels(self):
         pass
