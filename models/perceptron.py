@@ -2,30 +2,34 @@ import numpy as np
 
 
 class Perceptron(object):
-    """Class for the perceptron model.
+    """Class for the Perceptron model.
        
     Example usage:
         > clf = Perceptron()
-        > clf.fit(x_train, y_train)
-        > clf.predict(x_valid)
+        > clf.fit(X_train, y_train)
+        > clf.predict(X_valid)
     """
+    
+    def __init__(self):
+        self.theta = None 
 
-    def fit(self, x, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
+
+    def fit(self, X, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
         """Run the gradient ascent algorithm.
         
         Args:
-            x: Training example inputs. Shape (m, n).
-            y: Training example labels. Shape (m,).
+            X: Training examples of shape (m, n).
+            y: Training examples labels of shape (m,).
             lr: The learning rate.
             max_iter: Maximum number of iterations.
             eps: Threshold for determining convergence.
             verbose: Print loss values during training.
         """
-        self.theta = np.zeros(x.shape[1])
+        self.theta = np.zeros(X.shape[1])
         
         for i in range(max_iter):
-            h_x = self.predict(x)
-            dJ = x.T @ (y - h_x)
+            h_x = self.predict(X)
+            dJ = X.T @ (y - h_x)
             theta_prev = self.theta
             self.theta = self.theta + lr*dJ
             
@@ -37,16 +41,16 @@ class Perceptron(object):
                 print(f"Loss on iteration {i}: {J}")
 
 
-    def predict(self, x):
-        """Make a prediction given new inputs x.
+    def predict(self, X):
+        """Make a prediction given new inputs X.
         
         Args:
-            x: Inputs of shape (m, n).
+            X: Inputs of shape (m, n).
         
         Returns:
             h_x: Predictions of shape (m,).
         """
-        h_x = x @ self.theta
+        h_x = X @ self.theta
         return np.where(h_x >= 0, 1, 0)
 
 

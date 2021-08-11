@@ -6,17 +6,17 @@ def sigmoid(z):
     return 1.0 / (1 + np.exp(-z))
 
 
-def add_intercept(x):
+def add_intercept(X):
     """Add intercept to a 2D NumPy array.
     
     Args:
-        x: 2D NumPy array.
+        X: 2D NumPy array.
     
     Returns:
-        new_x: New 2D NumPy array, same as x, with 1's in the 0th column.
+        new_x: New 2D NumPy array, same as X, with 1's in the 0th column.
     """
-    m, n = x.shape
-    new_x = np.ones((m, n+1), dtype=x.dtype)
-    new_x[:, 1:] = x
+    m, n = X.shape
+    new_x = np.ones((m, n+1), dtype=X.dtype)
+    new_x[:, 1:] = X
 
     return new_x

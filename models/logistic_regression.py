@@ -4,29 +4,33 @@ from util import sigmoid
 
 
 class LogisticRegression(object):
-    """Class for the logistic regression model.
+    """Class for the Logistic Regression model.
            
     Example usage:
         > clf = LogisticRegression()
-        > clf.fit(x_train, y_train)
-        > clf.predict(x_valid)
+        > clf.fit(X_train, y_train)
+        > clf.predict(X_valid)
     """
+    
+    def __init__(self):
+        self.theta = None
 
-    def fit(self, x, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
+
+    def fit(self, X, y):
         """Run the Newton-Raphson method."""
         pass 
 
 
-    def predict(self, x):
-        """Make a prediction given new inputs x.
+    def predict(self, X):
+        """Make a prediction given new inputs X.
         
         Args:
-            x: Inputs of shape (m, n).
+            X: Inputs of shape (m, n).
         
         Returns:
             h_x: Predictions of shape (m,).
         """
-        z = x @ self.theta
+        z = X @ self.theta
         return sigmoid(z)
     
 
@@ -40,5 +44,5 @@ class LogisticRegression(object):
         Returns:
             J: How close the h_x are to the corresponding y. Scalar.
         """
-        # Cross-Entropy loss.
+        # Cross-entropy loss.
         return np.sum(y*np.log(h_x) + (1-y)*np.log(1-h_x))

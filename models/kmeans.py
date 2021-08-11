@@ -6,8 +6,8 @@ class KMeans(object):
            
     Example usage:
         > clf = KMeans()
-        > clf.fit(x_train)
-        > clf.predict(x_valid)
+        > clf.fit(X_train)
+        > clf.predict(X_valid)
     """
 
     def __init__(self, k=2):
@@ -17,32 +17,33 @@ class KMeans(object):
         """
         self.k = k
         self.centroids = None
-        self.C = None
+        self.labels = None
 
 
     def fit(self, X, max_iter=100):
         """Run the K-Means algorithm.
         
         Args:
-            X: Training example inputs of shape (m, n).
+            X: Training examples of shape (m, n).
             max_iter: Maximum number of iterations.
         """
         lowest_distortion = 10e7
+        m, _ = X.shape[0]
 
         for _ in range(max_iter):
-            centroids = X[np.random.choice(X.shape[0], self.k, replace=False)]
-            C = {}
+            centroids = X[np.random.choice(m, self.k, replace=False)]
+            labels = np.zeros(m)
 
             while True:
-                for idx, data in enumerate(X):
-                    C[idx]  = np.argmin(
-                        [self._dist(data, c) for c in centroids]
+                for i, data in enumerate(X):
+                    labels[i] = np.argmin(
+                        [self._dist(data, ct) for ct in centroids]
                     )
         
                 prev_centroids = centroids
                 for j in range(self.k):
                     centroids[j] = np.mean(
-                        np.array([X[idx] for idx, u in C.items() if u == j]),
+                        X[np.argwhere(labels == j)],
                         axis=0,
                     )
 
@@ -50,18 +51,12 @@ class KMeans(object):
                     break
             
             distortion = 0 
-            for idx, data in enumerate(X):
-                u = C[idx]
-                distortion += self._dist(data, centroids[u])
+            for i, data in enumerate(X):
+                distortion += self._dist(data, centroids[labels[i]])
                     
             if distortion < lowest_distortion:
-                self.centroids = centroids
-                self.C = C
+                self.centroids, self.labels = centroids, labels
                 lowest_distortion = distortion
-    
-    
-    def labels(self):
-        pass
 
 
     def predict(self, X):
@@ -74,10 +69,9 @@ class KMeans(object):
             y: Class predictions of shape (m,).
         """
         y = np.array(X.shape[0])
-        for idx, data in enumerate(X):
-            y[idx] = np.argmin(
-                [self._dist(data, c) for c in self.centroids]
-            )
+        for i, data in enumerate(X):
+            y[i] = np.argmin([self._dist(data, ct) for ct in self.centroids])
+
         return y
     
 

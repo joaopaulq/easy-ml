@@ -2,35 +2,39 @@ import numpy as np
 
 
 class LinearRegression(object):
-    """Class for the linear regression model.
+    """Class for the Linear Regression model.
    
     Example usage:
         > clf = LinearRegression()
-        > clf.fit(x_train, y_train)
-        > clf.predict(x_valid)
+        > clf.fit(X_train, y_train)
+        > clf.predict(X_valid)
     """
 
-    def fit(self, x, y):
+    def __init__(self):
+        self.theta = None
+
+
+    def fit(self, X, y):
         """Run the least squares method.
 
         Args:
-            x: Training example inputs. Shape (m, n).
-            y: Training example labels. Shape (m,).
+            X: Training examples of shape (m, n).
+            y: Training examples labels of shape (m,).
         """
-        inv = np.linalg.pinv(x.T @ x)
-        self.theta = inv @ x.T @ y
+        inv = np.linalg.pinv(X.T @ X)
+        self.theta = inv @ X.T @ y
         
 
-    def predict(self, x):
-        """Make a prediction given new inputs x.
+    def predict(self, X):
+        """Make a prediction given new inputs X.
         
         Args:
-            x: Inputs of shape (m, n).
+            X: Inputs of shape (m, n).
         
         Returns:
             h_x: Predictions of shape (m,).
         """
-        return x @ self.theta
+        return X @ self.theta
     
 
     def loss(self, y, h_x):
