@@ -28,24 +28,20 @@ class KMeans(object):
             max_iter: Maximum number of iterations.
         """
         lowest_distortion = 10e7
-        m, _ = X.shape[0]
+        m, _ = X.shape
 
         for _ in range(max_iter):
             centroids = X[np.random.choice(m, self.k, replace=False)]
-            labels = np.zeros(m)
+            labels = np.zeros(m, dtype=int)
 
             while True:
                 for i, data in enumerate(X):
                     labels[i] = np.argmin(
-                        [self._dist(data, ct) for ct in centroids]
-                    )
+                        [self._dist(data, ct) for ct in centroids])
         
                 prev_centroids = centroids
                 for j in range(self.k):
-                    centroids[j] = np.mean(
-                        X[np.argwhere(labels == j)],
-                        axis=0,
-                    )
+                    centroids[j] = np.mean(X[np.argwhere(labels == j)], axis=0)
 
                 if np.allclose(centroids, prev_centroids):
                     break
@@ -68,7 +64,7 @@ class KMeans(object):
         Returns:
             y: Class predictions of shape (m,).
         """
-        y = np.array(X.shape[0])
+        y = np.zeros(X.shape[0], dtype=int)
         for i, data in enumerate(X):
             y[i] = np.argmin([self._dist(data, ct) for ct in self.centroids])
 
