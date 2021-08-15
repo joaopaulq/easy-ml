@@ -30,10 +30,10 @@ class Perceptron(object):
         for i in range(max_iter):
             h_x = self.predict(X)
             dJ = X.T @ (y - h_x)
-            theta_prev = self.theta
+            prev_theta = self.theta
             self.theta = self.theta + lr*dJ
             
-            if np.allclose(self.theta, theta_prev, atol=eps):
+            if np.allclose(self.theta, prev_theta, atol=eps):
                 break
 
             if verbose and i % 10 == 0:
