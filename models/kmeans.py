@@ -3,7 +3,7 @@ import numpy as np
 
 class KMeans(object):
     """Class for the K-Means model.
-           
+
     Example usage:
         > clf = KMeans()
         > clf.fit(X_train)
@@ -22,12 +22,12 @@ class KMeans(object):
 
     def fit(self, X, max_iter=100):
         """Run the K-Means algorithm.
-        
+
         Args:
             X: Training examples of shape (m, n).
             max_iter: Maximum number of iterations.
         """
-        lowest_distortion = 10e7
+        lowest_distortion = float("inf")
         m, _ = X.shape
 
         for _ in range(max_iter):
@@ -37,30 +37,28 @@ class KMeans(object):
             while True:
                 for i, data in enumerate(X):
                     labels[i] = np.argmin(
-                        [self._dist(data, ct) for ct in centroids])
-        
+                        [self._dist(data, ct) for ct in centroids]
+                    )
+
                 prev_centroids = centroids
                 for j in range(self.k):
                     centroids[j] = np.mean(X[np.argwhere(labels == j)], axis=0)
 
                 if np.allclose(centroids, prev_centroids):
                     break
-            
-            distortion = 0 
-            for i, data in enumerate(X):
-                distortion += self._dist(data, centroids[labels[i]])
-                    
-            if distortion < lowest_distortion:
+
+            d = self._distortion(X, centroids, labels)
+            if d < lowest_distortion:
                 self.centroids, self.labels = centroids, labels
-                lowest_distortion = distortion
+                lowest_distortion = d
 
 
     def predict(self, X):
         """Make a prediction given new inputs X.
-        
+
         Args:
             X: Inputs of shape (m, n).
-        
+
         Returns:
             y: Class predictions of shape (m,).
         """
@@ -69,11 +67,17 @@ class KMeans(object):
             y[i] = np.argmin([self._dist(data, ct) for ct in self.centroids])
 
         return y
-    
+
+
+    def _distortion(self, X, centroids, labels):
+        return sum(
+            [self._dist(data, centroids[labels[i]]) for i, data in enumerate(X)]
+        )
+
 
     def _dist(self, x, y, m='euclidian'):
         """Computes the distance between two NumPy arrays.
-        
+
         Args:
             x: A NumPy array.
             y: A NumPy array.
@@ -88,6 +92,3 @@ class KMeans(object):
             return np.sum(np.abs(x - y))
         else:
             raise NotImplementedError(f'Measure {m} not implemented.')
-    
-
-
