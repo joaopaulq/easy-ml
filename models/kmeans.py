@@ -14,7 +14,7 @@ class KMeans(object):
         """Args: k: The number of clusters."""
         self.k = k
         self.centroids = None
-        self.labels = None
+        self.clusters = None
 
 
     def fit(self, X, max_iter=100):
@@ -30,28 +30,29 @@ class KMeans(object):
         for _ in range(max_iter):
             # Pick k random examples to be the initial cluster centroids.
             centroids = X[np.random.choice(m, self.k, replace=False)]
-            labels = np.zeros(m, dtype=int)
+            clusters = np.zeros(m, dtype=int)
 
             while True:
                 # Assign each example to the closest cluster centroid.
                 for i, data in enumerate(X):
-                    labels[i] = np.argmin(
-                        [self._dist(data, ct) for ct in centroids]
+                    clusters[i] = np.argmin(
+                        [self._dist(data, c) for c in centroids]
                     )
 
                 # Move each cluster centroid to the mean of the points assigned.
                 prev_centroids = centroids
                 for j in range(self.k):
-                    centroids[j] = np.mean(X[np.argwhere(labels == j)], axis=0)
+                    points = X[np.argwhere(clusters == j)]
+                    centroids[j] = np.mean(points, axis=0)
 
                 # Stop if converges.
                 if np.allclose(centroids, prev_centroids):
                     break
 
             # Pick the clustering that gives the lowest distortion.
-            d = self._distortion(X, centroids, labels)
+            d = self._distortion(X, centroids, clusters)
             if d < lowest_distortion:
-                self.centroids, self.labels = centroids, labels
+                self.centroids, self.clusters = centroids, clusters
                 lowest_distortion = d
 
 
@@ -62,11 +63,11 @@ class KMeans(object):
             X: Inputs of shape (m, n).
 
         Returns:
-            y: Class predictions of shape (m,).
+            y: Cluster predictions of shape (m,).
         """
         y = np.zeros(X.shape[0], dtype=int)
         for i, data in enumerate(X):
-            y[i] = np.argmin([self._dist(data, ct) for ct in self.centroids])
+            y[i] = np.argmin([self._dist(data, c) for c in self.centroids])
 
         return y
 
@@ -77,7 +78,7 @@ class KMeans(object):
         Args:
             X: Training examples of shape (m, n).
             c: The centroids.
-            y: Class (centroid) of each training example.
+            y: Cluster of each training example.
 
         Returns: Sum of distances between each example and the centroid to
                  which it has been assigned.

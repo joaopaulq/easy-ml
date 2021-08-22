@@ -1,22 +1,22 @@
-import numpy as np 
+import numpy as np
 
 
 class Perceptron(object):
     """Class for the Perceptron model.
-       
+
     Example usage:
         > clf = Perceptron()
         > clf.fit(X_train, y_train)
         > clf.predict(X_valid)
     """
-    
+
     def __init__(self):
-        self.theta = None 
+        self.theta = None
 
 
     def fit(self, X, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
         """Run the gradient ascent algorithm.
-        
+
         Args:
             X: Training examples of shape (m, n).
             y: Training examples labels of shape (m,).
@@ -26,13 +26,13 @@ class Perceptron(object):
             verbose: Print loss values during training.
         """
         self.theta = np.zeros(X.shape[1])
-        
+
         for i in range(max_iter):
             h_x = self.predict(X)
             dJ = X.T @ (y - h_x)
             prev_theta = self.theta
             self.theta = self.theta + lr*dJ
-            
+
             if np.allclose(self.theta, prev_theta, atol=eps):
                 break
 
@@ -42,11 +42,11 @@ class Perceptron(object):
 
 
     def predict(self, X):
-        """Make a prediction given new inputs X.
-        
+        """Make a prediction given new inputs.
+
         Args:
             X: Inputs of shape (m, n).
-        
+
         Returns:
             h_x: Predictions of shape (m,).
         """
@@ -60,9 +60,8 @@ class Perceptron(object):
         Args:
             y: Targets values of shape (m,).
             h_x: Predict values of shape (m,).
-        
+
         Returns:
             J: How close the h_x are to the corresponding y. Scalar.
         """
-        # 0-1 loss.
-        return np.sum(y == h_x)
+        return np.sum(y == h_x) # 0-1 loss.
