@@ -28,7 +28,7 @@ class KMeans(object):
         m, _ = X.shape
 
         for _ in range(max_iter):
-            # Pick k random examples to be the inital cluster centroids.
+            # Pick k random examples to be the initial cluster centroids.
             centroids = X[np.random.choice(m, self.k, replace=False)]
             labels = np.zeros(m, dtype=int)
 
@@ -56,7 +56,7 @@ class KMeans(object):
 
 
     def predict(self, X):
-        """Make a prediction given new inputs X.
+        """Make a prediction given new inputs.
 
         Args:
             X: Inputs of shape (m, n).
@@ -77,7 +77,7 @@ class KMeans(object):
         Args:
             X: Training examples of shape (m, n).
             c: The centroids.
-            y: Class of each training example.
+            y: Class (centroid) of each training example.
 
         Returns: Sum of distances between each example and the centroid to
                  which it has been assigned.
@@ -98,6 +98,6 @@ class KMeans(object):
         if m == 'e':
             return np.linalg.norm(x - y) # Euclidian distance.
         elif m == 'm':
-            return np.sum(np.abs(x - y)) # Manhattan (cityblock) distance.
+            return np.sum(np.abs(x - y)) # Manhattan distance.
         else:
             raise NotImplementedError(f'Measure {m} not implemented.')
