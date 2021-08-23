@@ -1,17 +1,24 @@
 import numpy as np
 
+from util import add_intercept
+
 
 class LinearRegression(object):
     """Class for the Linear Regression model.
+    
+    Attributes:
+        w: The weights. An array.
+        b: The intercept term. Float.
 
-    Example usage:
+    Example of usage:
         > clf = LinearRegression()
         > clf.fit(X_train, y_train)
         > clf.predict(X_valid)
     """
 
     def __init__(self):
-        self.theta = None
+        self.w = None
+        self.b = 0
 
 
     def fit(self, X, y):
@@ -21,8 +28,9 @@ class LinearRegression(object):
             X: Training examples of shape (m, n).
             y: Training examples labels of shape (m,).
         """
-        inv = np.linalg.pinv(X.T @ X)
-        self.theta = inv @ X.T @ y
+        X = add_intercept(X)
+        theta = np.linalg.pinv(X.T @ X) @ X.T @ y
+        self.w, self.b = theta[1:], theta[0]
 
 
     def predict(self, X):
@@ -34,7 +42,7 @@ class LinearRegression(object):
         Returns:
             h_x: Predictions of shape (m,).
         """
-        return X @ self.theta
+        return X @ self.w + self.b
 
 
     def loss(self, y, h_x):
@@ -45,6 +53,6 @@ class LinearRegression(object):
             h_x: Predict values of shape (m,).
 
         Returns:
-            J: How close the h_x are to the corresponding y. Scalar.
+            J: How close the h_x are to the corresponding y. Float.
         """
         return 0.5 * np.sum(np.square(h_x - y)) # Mean squared error (MSE).
