@@ -2,4 +2,5 @@ numpy
 matplotlib
 pandas
 jupyterlab
-scikit-learn 
+scikit-learn
+seaborn

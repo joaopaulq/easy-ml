@@ -1,18 +1,24 @@
 import numpy as np
 
 
-class KMeans(object):
+class KMeans:
     """Class for the K-Means model.
-
-    Example usage:
+    
+    Attributes:
+        k: An integer representing the number of clusters. Default=1.
+        measure: Distance measure. Default='e' (Euclidian distance).
+        centroids: An array that stores all the K centroids.
+        clusters: An array that stores the cluster of each training example.
+        
+    Example of usage:
         > clf = KMeans()
         > clf.fit(X_train)
         > clf.predict(X_valid)
     """
 
-    def __init__(self, k=1):
-        """Args: k: The number of clusters."""
+    def __init__(self, k=1, measure='e'):
         self.k = k
+        self.measure = measure
         self.centroids = None
         self.clusters = None
 
@@ -22,7 +28,7 @@ class KMeans(object):
 
         Args:
             X: Training examples of shape (m, n).
-            max_iter: Maximum number of iterations.
+            max_iter: Maximum number of iterations. Integer.
         """
         lowest_distortion = float("inf")
         m, _ = X.shape
@@ -63,10 +69,11 @@ class KMeans(object):
             X: Inputs of shape (m, n).
 
         Returns:
-            y: Cluster predictions of shape (m,).
+            y: Class predictions of shape (m,).
         """
         y = np.zeros(X.shape[0], dtype=int)
         for i, data in enumerate(X):
+            # Assign each example to the closest cluster centroid.
             y[i] = np.argmin([self._dist(data, c) for c in self.centroids])
 
         return y
@@ -77,28 +84,27 @@ class KMeans(object):
 
         Args:
             X: Training examples of shape (m, n).
-            c: The centroids.
-            y: Cluster of each training example.
+            c: The centroids of shape (k,).
+            y: Cluster of each training example of shape (m,).
 
-        Returns: Sum of distances between each example and the centroid to
-                 which it has been assigned.
+        Returns: Sum of distances between each example and the cluster 
+                 centroid to which it has been assigned. Float.
         """
         return sum([self._dist(data, c[y[i]]) for i, data in enumerate(X)])
 
 
-    def _dist(self, x, y, m='e'):
+    def _dist(self, x, y):
         """Computes the distance between two NumPy arrays.
 
         Args:
             x: A NumPy array.
             y: A NumPy array.
-            m: Distance measure.
 
-        Returns: Distance between x and y using measure m.
+        Returns: Distance between x and y using the given measure. Float.
         """
-        if m == 'e':
+        if self.measure == 'e':
             return np.linalg.norm(x - y) # Euclidian distance.
-        elif m == 'm':
+        elif self.measure == 'm':
             return np.sum(np.abs(x - y)) # Manhattan distance.
         else:
-            raise NotImplementedError(f'Measure {m} not implemented.')
+            raise NotImplementedError(f'Measure {self.measure} not implemented.')
