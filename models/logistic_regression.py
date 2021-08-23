@@ -1,19 +1,24 @@
 import numpy as np
 
-from util import sigmoid
+from util import sigmoid, add_intercept
 
 
-class LogisticRegression(object):
+class LogisticRegression:
     """Class for the Logistic Regression model.
+    
+    Attributes:
+        w: The weights. An array.
+        b: The intercept term. Float.
 
-    Example usage:
+    Example of usage:
         > clf = LogisticRegression()
         > clf.fit(X_train, y_train)
         > clf.predict(X_valid)
     """
 
     def __init__(self):
-        self.theta = None
+        self.w = None
+        self.b = 0
 
 
     def fit(self, X, y):
@@ -30,7 +35,7 @@ class LogisticRegression(object):
         Returns:
             h_x: Predictions of shape (m,).
         """
-        z = X @ self.theta
+        z = X @ self.w + self.b
         return sigmoid(z)
 
 

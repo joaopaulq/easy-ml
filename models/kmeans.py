@@ -1,5 +1,7 @@
 import numpy as np
 
+from util import add_intercept
+
 
 class KMeans:
     """Class for the K-Means model.

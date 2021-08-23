@@ -3,7 +3,7 @@ import numpy as np
 from util import add_intercept
 
 
-class LinearRegression(object):
+class LinearRegression:
     """Class for the Linear Regression model.
     
     Attributes:

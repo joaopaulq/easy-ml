@@ -1,17 +1,24 @@
 import numpy as np
 
+from util import add_intercept
 
-class Perceptron(object):
+
+class Perceptron:
     """Class for the Perceptron model.
+    
+    Attributes:
+        w: The weights. An array.
+        b: The intercept term. Float.
 
-    Example usage:
+    Example of usage:
         > clf = Perceptron()
         > clf.fit(X_train, y_train)
         > clf.predict(X_valid)
     """
 
     def __init__(self):
-        self.theta = None
+        self.w = None
+        self.b = 0
 
 
     def fit(self, X, y, lr=0.2, max_iter=100, eps=1e-5, verbose=False):
@@ -20,25 +27,36 @@ class Perceptron(object):
         Args:
             X: Training examples of shape (m, n).
             y: Training examples labels of shape (m,).
-            lr: The learning rate.
-            max_iter: Maximum number of iterations.
-            eps: Threshold for determining convergence.
-            verbose: Print loss values during training.
+            lr: The learning rate. Float.
+            max_iter: Maximum number of iterations. Integer.
+            eps: Threshold for determining convergence. Float.
+            verbose: Print loss values during training. Boolean.
         """
-        self.theta = np.zeros(X.shape[1])
+        X = add_intercept(X)
+        # Start theta with the zero vector.
+        theta = np.zeros(X.shape[1])
+        self.w = theta[1:]
 
         for i in range(max_iter):
-            h_x = self.predict(X)
-            dJ = X.T @ (y - h_x)
-            prev_theta = self.theta
-            self.theta = self.theta + lr*dJ
-
-            if np.allclose(self.theta, prev_theta, atol=eps):
+            # Make a prediction.
+            h_x = self.predict(X[:, 1:])
+            # Compute the gradient.
+            dJ = X.T @ (y - h_x)   
+            # Update rule.
+            prev_theta = theta
+            theta = theta + lr*dJ
+            
+            self.w, self.b = theta[1:], theta[0]
+            
+            # Stop if converges.
+            if np.allclose(theta, prev_theta, atol=eps):
                 break
 
             if verbose and i % 10 == 0:
+                # Print the loss.
                 J = self.loss(y, h_x)
                 print(f"Loss on iteration {i}: {J}")
+        
 
 
     def predict(self, X):
@@ -50,7 +68,8 @@ class Perceptron(object):
         Returns:
             h_x: Predictions of shape (m,).
         """
-        h_x = X @ self.theta
+        h_x = X @ self.w + self.b
+        # Apply the threshold function.
         return np.where(h_x >= 0, 1, 0)
 
 
@@ -64,4 +83,4 @@ class Perceptron(object):
         Returns:
             J: How close the h_x are to the corresponding y. Scalar.
         """
-        return np.sum(y == h_x) # 0-1 loss.
+        return np.sum(y != h_x) # 0-1 loss.
