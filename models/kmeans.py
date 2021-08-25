@@ -5,13 +5,14 @@ from util import add_intercept
 
 class KMeans:
     """Class for the K-Means model.
-    
+
     Attributes:
         k: An integer representing the number of clusters. Default=1.
         measure: Distance measure. Default='e' (Euclidian distance).
-        centroids: An array that stores all the K centroids.
-        clusters: An array that stores the cluster of each training example.
-        
+        centroids: A NumPy array that stores all the K centroids.
+        clusters: A NumPy array that stores the cluster of each
+                  training example.
+
     Example of usage:
         > clf = KMeans()
         > clf.fit(X_train)
@@ -29,7 +30,7 @@ class KMeans:
         """Run the K-Means algorithm.
 
         Args:
-            X: Training examples of shape (m, n).
+            X: Training examples of shape (m, n). NumPy array.
             max_iter: Maximum number of iterations. Integer.
         """
         lowest_distortion = float("inf")
@@ -68,10 +69,10 @@ class KMeans:
         """Make a prediction given new inputs.
 
         Args:
-            X: Inputs of shape (m, n).
+            X: Inputs of shape (m, n). NumPy array.
 
         Returns:
-            y: Class predictions of shape (m,).
+            y: Class predictions of shape (m,). NumPy array.
         """
         y = np.zeros(X.shape[0], dtype=int)
         for i, data in enumerate(X):
@@ -85,11 +86,11 @@ class KMeans:
         """Computes the distortion of a clustering.
 
         Args:
-            X: Training examples of shape (m, n).
-            c: The centroids of shape (k,).
-            y: Cluster of each training example of shape (m,).
+            X: Training examples of shape (m, n). NumPy array.
+            c: The centroids of shape (k,). NumPy array.
+            y: Cluster of each training example of shape (m,). NumPy array.
 
-        Returns: Sum of distances between each example and the cluster 
+        Returns: Sum of distances between each example and the cluster
                  centroid to which it has been assigned. Float.
         """
         return sum([self._dist(data, c[y[i]]) for i, data in enumerate(X)])

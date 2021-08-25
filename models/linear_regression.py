@@ -7,7 +7,7 @@ class LinearRegression:
     """Class for the Linear Regression model.
     
     Attributes:
-        w: The weights. An array.
+        w: The weights. NumPy array.
         b: The intercept term. Float.
 
     Example of usage:
@@ -25,8 +25,8 @@ class LinearRegression:
         """Run the least squares method.
 
         Args:
-            X: Training examples of shape (m, n).
-            y: Training examples labels of shape (m,).
+            X: Training examples of shape (m, n). NumPy array.
+            y: Training examples labels of shape (m,). NumPy array.
         """
         X = add_intercept(X)
         theta = np.linalg.pinv(X.T @ X) @ X.T @ y
@@ -37,10 +37,10 @@ class LinearRegression:
         """Make a prediction given new inputs.
 
         Args:
-            X: Inputs of shape (m, n).
+            X: Inputs of shape (m, n). NumPy array.
 
         Returns:
-            h_x: Predictions of shape (m,).
+            h_x: Predictions of shape (m,). NumPy array.
         """
         return X @ self.w + self.b
 
@@ -49,8 +49,8 @@ class LinearRegression:
         """Function that measures the quality of the model.
 
         Args:
-            y: Targets values of shape (m,).
-            h_x: Predict values of shape (m,).
+            y: Targets values of shape (m,). NumPy array.
+            h_x: Predict values of shape (m,). NumPy array.
 
         Returns:
             J: How close the h_x are to the corresponding y. Float.
