@@ -1,6 +1,14 @@
 # ml-scratch
 Some of the most famous machine learning algorithms implemented from scratch.
 
+## Contents
+```
+├── ml-scratch
+│   ├── models # .py files
+│   └── tests  # .ipynb files
+└──
+```
+
 ## Models
 * Supervised Learning
   * Linear Classifiers
