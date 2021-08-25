@@ -1,6 +1,4 @@
 numpy
 matplotlib
-pandas
 jupyterlab
 scikit-learn
-seaborn
