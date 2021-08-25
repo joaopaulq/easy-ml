@@ -53,6 +53,7 @@ class LogisticRegression:
             self.w = self.w - H_inv @ dJw
             self.b = self.b - (dJb/d2Jb)
             
+            # Stop if converges.
             if np.allclose(prev_w, self.w) and np.isclose(prev_b, self.b):
                 break
             
