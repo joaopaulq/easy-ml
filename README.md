@@ -1,5 +1,5 @@
 # ml-scratch
-Some of the most famous machine learning algorithms implemented from scratch.
+😷
 
 ## Contents
 ```
