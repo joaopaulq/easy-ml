@@ -1,6 +1,6 @@
 import numpy as np
 
-from util import sigmoid, add_intercept
+from util import sigmoid
 
 
 class LogisticRegression:
@@ -31,6 +31,7 @@ class LogisticRegression:
             verbose: Print loss values during training. Boolean.
         """
         m, n = X.shape
+        # Start the weights with the zero vector.
         self.w = np.zeros(n)
         
         for i in range(max_iter):
