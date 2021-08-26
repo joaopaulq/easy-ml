@@ -1,7 +1,5 @@
 import numpy as np
 
-from util import add_intercept
-
 
 class LinearRegression:
     """Class for the Linear Regression model.
@@ -28,8 +26,9 @@ class LinearRegression:
             X: Training examples of shape (m, n). NumPy array.
             y: Training examples labels of shape (m,). NumPy array.
         """
-        X = add_intercept(X)
-        theta = np.linalg.pinv(X.T @ X) @ X.T @ y
+        X = self._add_intercept(X)
+        inv = np.linalg.pinv(X.T @ X)
+        theta = inv @ X.T @ y
         self.w, self.b = theta[1:], theta[0]
 
 
@@ -56,3 +55,19 @@ class LinearRegression:
             J: How close the h_x are to the corresponding y. Float.
         """
         return 0.5 * np.sum(np.square(h_x - y)) # Mean squared error (MSE).
+
+
+    def _add_intercept(X):
+        """Add intercept to a 2D NumPy array.
+
+        Args:
+            X: 2D NumPy array.
+
+        Returns:
+            new_x: New 2D NumPy array, same as X, with 1's in the 0th column.
+        """
+        m, n = X.shape
+        new_x = np.ones((m, n+1), dtype=X.dtype)
+        new_x[:, 1:] = X
+
+        return new_x
