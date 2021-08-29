@@ -14,6 +14,7 @@
   * [Linear Regression](https://github.com/joaopaulq/ml-scratch/blob/main/models/linear_regression.py)
   * [Logistic Regression](https://github.com/joaopaulq/ml-scratch/blob/main/models/logistic_regression.py)
   * [Perceptron](https://github.com/joaopaulq/ml-scratch/blob/main/models/perceptron.py)
+  * [Gaussian Discriminant Analysis](https://github.com/joaopaulq/ml-scratch/blob/main/models/gda.py)
 * Unsupervised Learning
   * [K-Means](https://github.com/joaopaulq/ml-scratch/blob/main/models/kmeans.py)
 
