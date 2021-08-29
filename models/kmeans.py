@@ -51,8 +51,7 @@ class KMeans:
                 # Move each cluster centroid to the mean of the points assigned.
                 prev_centroids = centroids
                 for j in range(self.k):
-                    points = X[np.argwhere(clusters == j)]
-                    centroids[j] = np.mean(points, axis=0)
+                    centroids[j] = np.mean(X[clusters == j], axis=0)
 
                 # Stop if converges.
                 if np.allclose(centroids, prev_centroids):

@@ -1,5 +1,7 @@
 import numpy as np
 
+from util import sigmoid
+
 
 class LogisticRegression:
     """Class for the Logistic Regression model.
@@ -70,7 +72,7 @@ class LogisticRegression:
             h_x: Predictions of shape (m,). NumPy array.
         """
         z = X @ self.w + self.b
-        return self._sigmoid(z)
+        return sigmoid(z)
 
 
     def loss(self, y, h_x):
@@ -84,8 +86,3 @@ class LogisticRegression:
             J: How close the h_x are to the corresponding y. Float.
         """
         return np.mean(y*np.log(h_x) + (1-y)*np.log(1-h_x)) # Cross-entropy.
-    
-    
-    def _sigmoid(z):
-        """Computes the sigmoid function on a 1D NumPy array."""
-        return 1.0 / (1 + np.exp(-z))
