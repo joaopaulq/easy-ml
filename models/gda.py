@@ -26,6 +26,12 @@ class GDA:
     
     
     def fit(self, X, y):
+        """Find the maximum likelihood estimate of the parameters.
+
+        Args:
+            X: Training examples of shape (m, n). NumPy array.
+            y: Training examples labels of shape (m,). NumPy array.
+        """
         self.phi = np.mean(y == 1)
         self.mu_0 = np.mean(X[y == 0], axis=0)
         self.mu_1 = np.mean(X[y == 1], axis=0)
@@ -35,14 +41,24 @@ class GDA:
     
     
     def predict(self, X):
-        z = 
-        return sigmoid(z)
-    
-    
-    def pdf(self, X):
-        py_0 = multivariate_normal.pdf(data, self.mu_0, self.sigma)
-        py_1 = multivariate_normal.pdf(data, self.mu_1, self.sigma)
-        y[i] = np.argmax([p0 * py_0, p1 * py_1])
+        """Make a prediction given new inputs.
+
+        Args:
+            X: Inputs of shape (m, n). NumPy array.
+
+        Returns:
+            h_x: Predictions of shape (m,). NumPy array.
+        """
+        # Probability of each class being true. (Prior).
+        p0 = 1 - self.phi
+        p1 = self.phi
         
-        return y
-    
+        # Models the distribution of each class. (Likelihood).
+        px_given_0 = multivariate_normal.pdf(X, mean=self.mu_0, cov=self.sigma)
+        px_given_1 = multivariate_normal.pdf(X, mean=self.mu_1, cov=self.sigma)
+        
+        # Use Bayes rule to derive the distribution on y given x. (Posterior).
+        p0_given_x = p1 * px_given_0
+        p1_given_x = p0 * px_given_1
+        
+        return np.argmax([p0_given_x, p1_given_x], axis=0)
