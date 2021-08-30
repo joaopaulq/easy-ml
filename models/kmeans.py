@@ -1,7 +1,5 @@
 import numpy as np
 
-from util import add_intercept
-
 
 class KMeans:
     """Class for the K-Means model.
@@ -10,8 +8,8 @@ class KMeans:
         k: An integer representing the number of clusters. Default=1.
         measure: Distance measure. Default='e' (Euclidian distance).
         centroids: A NumPy array that stores all the K centroids.
-        clusters: A NumPy array that stores the cluster of each
-                  training example.
+        clusters: A NumPy array that stores the cluster of each training
+                  example.
 
     Example of usage:
         > clf = KMeans()
