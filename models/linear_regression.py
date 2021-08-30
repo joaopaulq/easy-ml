@@ -57,7 +57,7 @@ class LinearRegression:
         return 0.5 * np.sum(np.square(h_x - y)) # Mean squared error (MSE).
 
 
-    def _add_intercept(X):
+    def _add_intercept(self, X):
         """Add intercept to a 2D NumPy array.
 
         Args:
