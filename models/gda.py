@@ -58,7 +58,7 @@ class GDA:
         px_1 = multivariate_normal.pdf(X, mean=self.mu_1, cov=self.sigma)
 
         # Use Bayes rule to derive the distribution on y given x. (Posterior).
-        p0_x = p1 * px_0
-        p1_x = p0 * px_1
+        p0_x = p0 * px_0
+        p1_x = p1 * px_1
 
         return np.argmax([p0_x, p1_x], axis=0)
