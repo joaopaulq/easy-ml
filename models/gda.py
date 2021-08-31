@@ -5,7 +5,7 @@ from scipy.stats import multivariate_normal
 
 class GDA:
     """Class for the Gaussian Discriminant Analysis model.
-    
+
     Attributes:
         phi: Proportion of examples from class 1. Float.
         mu_0: Mean for class 0. NumPy array.
@@ -17,14 +17,14 @@ class GDA:
         > clf.fit(X_train, y_train)
         > clf.predict(X_valid)
     """
-    
+
     def __init__(self):
         self.phi = 0
         self.mu_0 = None
         self.mu_1 = None
         self.sigma = None
-    
-    
+
+
     def fit(self, X, y):
         """Find the maximum likelihood estimate of the parameters.
 
@@ -38,8 +38,8 @@ class GDA:
         t0 = X[y == 0] - self.mu_0
         t1 = X[y == 1] - self.mu_1
         self.sigma = ((t0.T @ t0) + (t1.T @ t1)) / X.shape[0]
-    
-    
+
+
     def predict(self, X):
         """Make a prediction given new inputs.
 
@@ -52,13 +52,13 @@ class GDA:
         # Probability of each class being true. (Prior).
         p0 = 1 - self.phi
         p1 = self.phi
-        
+
         # Models the distribution of each class. (Likelihood).
-        px_given_0 = multivariate_normal.pdf(X, mean=self.mu_0, cov=self.sigma)
-        px_given_1 = multivariate_normal.pdf(X, mean=self.mu_1, cov=self.sigma)
-        
+        px_0 = multivariate_normal.pdf(X, mean=self.mu_0, cov=self.sigma)
+        px_1 = multivariate_normal.pdf(X, mean=self.mu_1, cov=self.sigma)
+
         # Use Bayes rule to derive the distribution on y given x. (Posterior).
-        p0_given_x = p1 * px_given_0
-        p1_given_x = p0 * px_given_1
-        
-        return np.argmax([p0_given_x, p1_given_x], axis=0)
+        p0_x = p1 * px_0
+        p1_x = p0 * px_1
+
+        return np.argmax([p0_x, p1_x], axis=0)
