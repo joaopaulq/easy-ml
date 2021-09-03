@@ -4,8 +4,8 @@
 ## Contents
 ```
 ├── ml-scratch
-│   ├── models # .py files
-│   └── tests  # .ipynb files
+│   ├── models (py files)
+│   └── tests  (ipynb files)
 └──
 ```
 
