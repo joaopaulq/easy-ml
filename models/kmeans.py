@@ -7,9 +7,8 @@ class KMeans:
     Attributes:
         k: An integer representing the number of clusters. Default=1.
         measure: Distance measure. Default='e' (Euclidian distance).
-        centroids: A NumPy array that stores all the K centroids.
-        clusters: A NumPy array that stores the cluster of each training
-                  example.
+        centroids: Stores all the K centroids. NumPy array
+        clusters: Stores the cluster of each training example. NumPy array.
 
     Example of usage:
         > clf = KMeans()
@@ -107,4 +106,4 @@ class KMeans:
         elif self.measure == 'm':
             return np.sum(np.abs(x - y)) # Manhattan distance.
         else:
-            raise NotImplementedError(f'Measure {self.measure} not implemented.')
+            raise NotImplementedError(f'Measure {self.measure} not implemented')
