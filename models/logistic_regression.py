@@ -87,5 +87,5 @@ class LogisticRegression:
     
     
     def _sigmoid(self, z):
-        """Computes the sigmoid function on a 1D NumPy array."""
+        """Computes the sigmoid function on a NumPy array."""
         return 1.0 / (1 + np.exp(-z))
