@@ -29,16 +29,17 @@ class Perceptron:
             max_iter: Maximum number of iterations. Integer.
             verbose: Print loss values during training. Boolean.
         """
+        m, n = X.shape
         # Start the weights with the zero vector.
-        self.w = np.zeros(X.shape[1])
+        self.w = np.zeros(n)
 
         for i in range(max_iter):
             # Make a prediction.
             h_x = self.predict(X)
             
             # Compute the gradient.
-            dJw = (X.T @ (y - h_x)) / m # Derivative of loss with respect to weights.
-            dJb = np.sum(y - h_x) / m # Derivative of loss with respect to bias.
+            dJw = (X.T @ (y - h_x)) / m # Derivative of loss wrt weights.
+            dJb = np.sum(y - h_x) / m # Derivative of loss wrt bias.
             
             # Update rule.
             prev_w, prev_b = self.w, self.b
@@ -63,9 +64,9 @@ class Perceptron:
         Returns:
             h_x: Predictions of shape (m,). NumPy array.
         """
-        h_x = X @ self.w + self.b
+        z = X @ self.w + self.b
         # Apply the threshold function.
-        return np.where(h_x >= 0, 1, 0)
+        return np.where(z >= 0, 1, 0)
 
 
     def loss(self, y, h_x):

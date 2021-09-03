@@ -50,8 +50,7 @@ class GDA:
             h_x: Predictions of shape (m,). NumPy array.
         """
         # Probability of each class being true. (Prior).
-        p0 = 1 - self.phi
-        p1 = self.phi
+        p0, p1 = 1 - self.phi, self.phi
 
         # Models the distribution of each class. (Likelihood).
         px_0 = multivariate_normal.pdf(X, mean=self.mu_0, cov=self.sigma)

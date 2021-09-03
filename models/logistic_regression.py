@@ -37,9 +37,9 @@ class LogisticRegression:
             h_x = self.predict(X)
             
             # Compute the gradient.
-            dJw = (X.T @ (y - h_x)) / m # Derivative of loss with respect to weights.
-            dJb = np.sum(y - h_x) / m # Derivative of loss with respect to bias.
-            d2Jb = -m # Second derivative of loss with respect to bias.
+            dJw = (X.T @ (y - h_x)) / m # Derivative of loss wrt weights.
+            dJb = np.sum(y - h_x) / m # Derivative of loss wrt bias.
+            d2Jb = -m # Second derivative of loss wrt bias.
             
             # Compute the hessian and its inverse.
             D = np.diag(h_x * (1 - h_x))
