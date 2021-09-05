@@ -27,8 +27,7 @@ class LinearRegression:
             y: Training examples labels of shape (m,). NumPy array.
         """
         X = self._add_intercept(X)
-        inv = np.linalg.pinv(X.T @ X)
-        theta = inv @ X.T @ y
+        theta = np.linalg.pinv(X.T @ X) @ X.T @ y
         self.w, self.b = theta[1:], theta[0]
 
 
