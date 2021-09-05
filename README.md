@@ -1,14 +1,6 @@
 # ml-scratch
 😷
 
-## Contents
-```
-├── ml-scratch
-│   ├── models (py files)
-│   └── tests  (ipynb files)
-└──
-```
-
 ## Models
 * Supervised Learning
   * [Linear Regression](https://github.com/joaopaulq/ml-scratch/blob/main/models/linear_regression.py)
