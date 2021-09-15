@@ -7,7 +7,7 @@ class GDA:
     """Class for the Gaussian Discriminant Analysis model.
 
     Attributes:
-        phi: Proportion of examples from class 1. Float.
+        phi: Proportion of examples from class 0. Float.
         mu_0: Mean for class 0. NumPy array.
         mu_1: Mean for class 1. NumPy array.
         sigma: Covariance matrix. NumPy array.
@@ -32,7 +32,7 @@ class GDA:
             X: Training examples of shape (m, n). NumPy array.
             y: Training examples labels of shape (m,). NumPy array.
         """
-        self.phi = np.mean(y == 1)
+        self.phi = np.mean(y == 0)
         self.mu_0 = np.mean(X[y == 0], axis=0)
         self.mu_1 = np.mean(X[y == 1], axis=0)
         t0 = X[y == 0] - self.mu_0
@@ -50,7 +50,7 @@ class GDA:
             h_x: Predictions of shape (m,). NumPy array.
         """
         # Probability of each class being true. (Prior).
-        p0, p1 = 1 - self.phi, self.phi
+        p0, p1 = self.phi, 1 - self.phi
 
         # Models the distribution of each class. (Likelihood).
         px_0 = multivariate_normal.pdf(X, mean=self.mu_0, cov=self.sigma)
