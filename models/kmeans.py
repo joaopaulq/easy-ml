@@ -86,8 +86,9 @@ class KMeans:
             c: The centroids of shape (k,). NumPy array.
             y: Cluster of each training example of shape (m,). NumPy array.
 
-        Returns: Sum of distances between each example and the cluster
-                 centroid to which it has been assigned. Float.
+        Returns:
+            Sum of distances between each example and the cluster centroid
+            to which it has been assigned. Float.
         """
         return sum([self._dist(data, c[y[i]]) for i, data in enumerate(X)])
 
@@ -99,7 +100,8 @@ class KMeans:
             x: A NumPy array.
             y: A NumPy array.
 
-        Returns: Distance between x and y using the given measure. Float.
+        Returns:
+            Distance between x and y using the given measure. Float.
         """
         if self.measure == 'e':
             return np.linalg.norm(x - y) # Euclidian distance.
