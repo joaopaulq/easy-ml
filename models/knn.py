@@ -40,8 +40,8 @@ class KNN:
     def predict(self, X):
         """Make a prediction given new inputs.
 
-        If classification, each value is classified by a plurality vote of KNN.
-        If regression, each value is the average of the values of KNN.
+        If Classification, each value is classified by a plurality vote of KNN.
+        If Regression, each value is the average of the values of KNN.
         
         Args:
             X: Inputs of shape (m, n). NumPy array.
