@@ -3,6 +3,7 @@
 
 ## Models
 * **Supervised Learning**
+  * [K-Nearest Neighbors](https://github.com/joaopaulq/ml-scratch/blob/main/models/knn.py) 
   * [Linear Regression](https://github.com/joaopaulq/ml-scratch/blob/main/models/linear_regression.py)
   * [Logistic Regression](https://github.com/joaopaulq/ml-scratch/blob/main/models/logistic_regression.py)
   * [Perceptron](https://github.com/joaopaulq/ml-scratch/blob/main/models/perceptron.py)
