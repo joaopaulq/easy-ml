@@ -6,7 +6,6 @@ class KMeans:
 
     Attributes:
         k: An integer representing the number of clusters. Default=1.
-        measure: Distance measure. Default='e' (Euclidian distance).
         centroids: Stores all the K centroids. NumPy array
         clusters: Stores the cluster of each training example. NumPy array.
 
@@ -16,9 +15,8 @@ class KMeans:
         > clf.predict(X_valid)
     """
 
-    def __init__(self, k=1, measure='e'):
+    def __init__(self, k=1):
         self.k = k
-        self.measure = measure
         self.centroids = None
         self.clusters = None
 
@@ -93,19 +91,20 @@ class KMeans:
         return sum([self._dist(data, c[y[i]]) for i, data in enumerate(X)])
 
 
-    def _dist(self, x, y):
+    def _dist(self, x, y, measure='e'):
         """Computes the distance between two NumPy arrays.
 
         Args:
             x: A NumPy array.
             y: A NumPy array.
+            measure: Distance measure.
 
         Returns:
             Distance between x and y using the given measure. Float.
         """
-        if self.measure == 'e':
+        if measure == 'e':
             return np.linalg.norm(x - y) # Euclidian distance.
-        elif self.measure == 'm':
+        elif measure == 'm':
             return np.sum(np.abs(x - y)) # Manhattan distance.
         else:
-            raise NotImplementedError(f'Measure {self.measure} not implemented')
+            raise NotImplementedError(f'Measure {measure} not implemented')
