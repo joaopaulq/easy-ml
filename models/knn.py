@@ -8,8 +8,6 @@ class KNN:
     
     Attributes:
         k: Number of neighbors. Integer. Default=1.
-        measure: Distance measure. Default='e' (Euclidian distance).
-        problem: Regression (r) or Classification (c). Default='c'.
         X: Training examples of shape (m, n). NumPy array.
         y: Training examples labels of shape (m,). NumPy array.
 
@@ -19,10 +17,8 @@ class KNN:
         > clf.predict(X_valid)
     """
 
-    def __init__(self, k=1, measure='e', problem='c'):
+    def __init__(self, k=1):
         self.k = k
-        self.measure = measure
-        self.problem = problem
         self.X = None 
         self.y = None
 
@@ -39,9 +35,6 @@ class KNN:
 
     def predict(self, X):
         """Make a prediction given new inputs.
-
-        If Classification, each value is classified by a plurality vote of KNN.
-        If Regression, each value is the average of the values of KNN.
         
         Args:
             X: Inputs of shape (m, n). NumPy array.
@@ -52,32 +45,28 @@ class KNN:
         h_x = np.zeros((X.shape[0], self.k))
 
         for i, data in enumerate(X):
-            D = [self._dist(data, xi) for xi in self.X]
-            neighbors = D.sort()[:self.k]
+            D = [self._dist(data, x) for x in self.X]
+            neighbors = np.argsort(D)[:self.k]
             h_x[i] = self.y[neighbors]
 
-        if self.problem == 'c':
-            return stats.mode(h_x, axis=1)[0]
-        elif self.problem == 'r':
-            return np.mean(h_x, axis=1)
-        else:
-            raise NotImplementedError(f'Problem {self.problem} not implemented')
+        return stats.mode(h_x, axis=1)[0]
 
     
-    def _dist(self, x, y):
+    def _dist(self, x, y, measure='e'):
         """Computes the distance between two NumPy arrays.
 
         Args:
             x: A NumPy array.
             y: A NumPy array.
+            measure: Distance measure.
 
         Returns:
             Distance between x and y using the given measure. Float.
         """
-        if self.measure == 'e':
+        if measure == 'e':
             return np.linalg.norm(x - y) # Euclidian distance.
-        elif self.measure == 'm':
+        elif measure == 'm':
             return np.sum(np.abs(x - y)) # Manhattan distance.
         else:
-            raise NotImplementedError(f'Measure {self.measure} not implemented')
+            raise NotImplementedError(f'Measure {measure} not implemented')
     
