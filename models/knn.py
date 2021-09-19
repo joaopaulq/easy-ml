@@ -39,6 +39,9 @@ class KNN:
 
     def predict(self, X):
         """Make a prediction given new inputs.
+
+        If classification, each value is classified by a plurality vote of KNN.
+        If regression, each value is the average of the values of KNN.
         
         Args:
             X: Inputs of shape (m, n). NumPy array.
@@ -54,10 +57,8 @@ class KNN:
             h_x[i] = self.y[neighbors]
 
         if self.problem == 'c':
-            # Each value is classified by a plurality vote of KNN.
             return stats.mode(h_x, axis=1)[0]
         elif self.problem == 'r':
-            # Each value is the average of the values of KNN.
             return np.mean(h_x, axis=1)
         else:
             raise NotImplementedError(f'Problem {self.problem} not implemented')
