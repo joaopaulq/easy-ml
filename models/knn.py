@@ -4,7 +4,7 @@ from scipy import stats
 
 
 class KNN:
-    """Class for the K-Nearest Neighbors model.
+    """Class for the K-Nearest Neighbors (Classification) model.
     
     Attributes:
         k: Number of neighbors. Integer. Default=1.
