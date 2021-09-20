@@ -45,10 +45,13 @@ class KNN:
         h_x = np.zeros((X.shape[0], self.k))
 
         for i, data in enumerate(X):
+            # Compute the distance to each training example.
             D = [self._dist(data, x) for x in self.X]
+            # Take the k nearest neighbors.
             neighbors = np.argsort(D)[:self.k]
             h_x[i] = self.y[neighbors]
-
+        
+        # Assign each object to the class most common among its neighbors.
         return stats.mode(h_x, axis=1)[0]
 
     
