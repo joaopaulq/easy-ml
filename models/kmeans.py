@@ -1,5 +1,7 @@
 import numpy as np
 
+from util import dist
+
 
 class KMeans:
     """Class for the K-Means model.
@@ -39,9 +41,7 @@ class KMeans:
             while True:
                 # Assign each example to the closest cluster centroid.
                 for i, data in enumerate(X):
-                    clusters[i] = np.argmin(
-                        [self._dist(data, c) for c in centroids]
-                    )
+                    clusters[i] = np.argmin([dist(data, c) for c in centroids])
 
                 # Move each cluster centroid to the mean of the points assigned.
                 prev_centroids = centroids
@@ -71,7 +71,7 @@ class KMeans:
         y = np.zeros(X.shape[0], dtype=int)
         for i, data in enumerate(X):
             # Assign each example to the closest cluster centroid.
-            y[i] = np.argmin([self._dist(data, c) for c in self.centroids])
+            y[i] = np.argmin([dist(data, c) for c in self.centroids])
 
         return y
 
@@ -88,23 +88,4 @@ class KMeans:
             Sum of distances between each example and the cluster centroid
             to which it has been assigned. Float.
         """
-        return sum([self._dist(data, c[y[i]]) for i, data in enumerate(X)])
-
-
-    def _dist(self, x, y, measure='e'):
-        """Computes the distance between two NumPy arrays.
-
-        Args:
-            x: A NumPy array.
-            y: A NumPy array.
-            measure: Distance measure.
-
-        Returns:
-            Distance between x and y using the given measure. Float.
-        """
-        if measure == 'e':
-            return np.linalg.norm(x - y) # Euclidian distance.
-        elif measure == 'm':
-            return np.sum(np.abs(x - y)) # Manhattan distance.
-        else:
-            raise NotImplementedError(f'Measure {measure} not implemented')
+        return sum([dist(data, c[y[i]]) for i, data in enumerate(X)])

@@ -1,6 +1,7 @@
 import numpy as np
 
-from scipy import stats
+from scipy.stats import mode
+from util import dist
 
 
 class KNN:
@@ -46,30 +47,11 @@ class KNN:
 
         for i, data in enumerate(X):
             # Compute the distance to each training example.
-            D = [self._dist(data, x) for x in self.X]
+            D = [dist(data, x) for x in self.X]
             # Take the k nearest neighbors.
             neighbors = np.argsort(D)[:self.k]
             h_x[i] = self.y[neighbors]
         
         # Assign each object to the class most common among its neighbors.
-        return stats.mode(h_x, axis=1)[0]
-
-    
-    def _dist(self, x, y, measure='e'):
-        """Computes the distance between two NumPy arrays.
-
-        Args:
-            x: A NumPy array.
-            y: A NumPy array.
-            measure: Distance measure.
-
-        Returns:
-            Distance between x and y using the given measure. Float.
-        """
-        if measure == 'e':
-            return np.linalg.norm(x - y) # Euclidian distance.
-        elif measure == 'm':
-            return np.sum(np.abs(x - y)) # Manhattan distance.
-        else:
-            raise NotImplementedError(f'Measure {measure} not implemented')
+        return mode(h_x, axis=1)[0]
     
