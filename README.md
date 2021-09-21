@@ -1,5 +1,5 @@
 # ml-scratch
-😷
+Some of the most famous machine learning algorithms implemented from scratch using only NumPy. These are simple implementations, the focus is more on readability rather than efficiency.
 
 ## Models
 * **Supervised Learning**
