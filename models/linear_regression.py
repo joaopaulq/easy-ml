@@ -43,16 +43,3 @@ class LinearRegression:
             h_x: Predictions of shape (m,). NumPy array.
         """
         return X @ self.w + self.b
-
-
-    def loss(self, y, h_x):
-        """Function that measures the quality of the model.
-
-        Args:
-            y: Targets values of shape (m,). NumPy array.
-            h_x: Predict values of shape (m,). NumPy array.
-
-        Returns:
-            J: How close the h_x are to the corresponding y. Float.
-        """
-        return 0.5 * np.sum(np.square(h_x - y)) # Mean squared error (MSE).
