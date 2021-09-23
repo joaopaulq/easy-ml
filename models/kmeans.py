@@ -66,14 +66,14 @@ class KMeans:
             X: Inputs of shape (m, n). NumPy array.
 
         Returns:
-            y: Class predictions of shape (m,). NumPy array.
+            h_x: Class predictions of shape (m,). NumPy array.
         """
-        y = np.zeros(X.shape[0], dtype=int)
+        h_x = np.zeros(X.shape[0], dtype=int)
         for i, data in enumerate(X):
             # Assign each example to the closest cluster centroid.
-            y[i] = np.argmin([dist(data, c) for c in self.centroids])
+            h_x[i] = np.argmin([dist(data, c) for c in self.centroids])
 
-        return y
+        return h_x
 
 
     def _distortion(self, X, c, y):
