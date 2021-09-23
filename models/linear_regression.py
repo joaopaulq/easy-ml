@@ -1,5 +1,6 @@
 import numpy as np
-import util
+
+from util import add_intercept
 
 
 class LinearRegression:
@@ -27,7 +28,7 @@ class LinearRegression:
             X: Training examples of shape (m, n). NumPy array.
             y: Training examples labels of shape (m,). NumPy array.
         """
-        X = util.add_intercept(X)
+        X = add_intercept(X)
         theta = np.linalg.pinv(X.T @ X) @ X.T @ y
         self.w, self.b = theta[1:], theta[0]
 

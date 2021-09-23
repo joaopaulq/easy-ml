@@ -58,7 +58,7 @@ class LogisticRegression:
                 break
             
             if verbose and i % 10 == 0:
-                J = self.loss(y, h_x)
+                J = self._loss(y, h_x)
                 print(f"Loss on iteration {i}: {J}")
         
 
@@ -75,7 +75,7 @@ class LogisticRegression:
         return sigmoid(z)
 
 
-    def loss(self, y, h_x):
+    def _loss(self, y, h_x):
         """Function that measures the quality of the model.
 
         Args:
