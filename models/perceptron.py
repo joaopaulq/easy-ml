@@ -19,7 +19,7 @@ class Perceptron:
         self.b = 0
 
 
-    def fit(self, X, y, lr=0.1, max_iter=500, verbose=False):
+    def fit(self, X, y, lr=0.1, max_iter=1000, verbose=False):
         """Run the gradient ascent algorithm.
 
         Args:
@@ -30,8 +30,7 @@ class Perceptron:
             verbose: Print loss values during training. Boolean.
         """
         m, n = X.shape
-        # Start the weights with the zero vector.
-        self.w = np.zeros(n)
+        self.w = np.zeros(n) # Start the weights with the zero vector.
 
         for i in range(max_iter):
             # Make a prediction.
@@ -65,8 +64,7 @@ class Perceptron:
             h_x: Predictions of shape (m,). NumPy array.
         """
         z = X @ self.w + self.b
-        # Apply the threshold function.
-        return np.where(z >= 0, 1, 0)
+        return np.where(z >= 0, 1, 0) # Apply the threshold function.
 
 
     def _loss(self, y, h_x):

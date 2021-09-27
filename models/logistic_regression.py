@@ -31,8 +31,7 @@ class LogisticRegression:
             verbose: Print loss values during training. Boolean.
         """
         m, n = X.shape
-        # Start the weights with the zero vector.
-        self.w = np.zeros(n)
+        self.w = np.zeros(n) # Start the weights with the zero vector.
         
         for i in range(max_iter):
             # Make a prediction.
@@ -51,7 +50,7 @@ class LogisticRegression:
             # Update rule.
             prev_w, prev_b = self.w, self.b
             self.w = self.w - H_inv @ dJw
-            self.b = self.b - (dJb/d2Jb)
+            self.b = self.b - (dJb / d2Jb)
             
             # Stop if converges.
             if np.allclose(prev_w, self.w) and np.isclose(prev_b, self.b):
