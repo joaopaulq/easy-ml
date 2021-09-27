@@ -23,22 +23,25 @@ class KMeans:
         self.clusters = None
 
 
-    def fit(self, X, max_iter=100):
+    def fit(self, X, n_init=100, max_iter=1000):
         """Run the K-Means algorithm.
 
         Args:
             X: Training examples of shape (m, n). NumPy array.
+            n_init: Number of time the k-means algorithm will be run with
+                    different centroid seeds. The final results will be the best
+                    output of n_init consecutive runs in terms of distortion.
             max_iter: Maximum number of iterations. Integer.
         """
-        lowest_distortion = float("inf")
+        lowest_d = float("inf")
         m, _ = X.shape
 
-        for _ in range(max_iter):
+        for _ in range(n_init):
             # Pick k random examples to be the initial cluster centroids.
             centroids = X[np.random.choice(m, self.k, replace=False)]
             clusters = np.zeros(m, dtype=int)
 
-            while True:
+            for _ in range(max_iter):
                 # Assign each example to the closest cluster centroid.
                 for i, data in enumerate(X):
                     clusters[i] = np.argmin([dist(data, c) for c in centroids])
@@ -54,9 +57,9 @@ class KMeans:
 
             # Pick the clustering that gives the lowest distortion.
             d = self._distortion(X, centroids, clusters)
-            if d < lowest_distortion:
+            if d < lowest_d:
                 self.centroids, self.clusters = centroids, clusters
-                lowest_distortion = d
+                lowest_d = d
 
 
     def predict(self, X):
