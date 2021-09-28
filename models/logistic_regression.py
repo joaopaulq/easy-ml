@@ -1,6 +1,6 @@
 import numpy as np
 
-from util import sigmoid
+from models.util import sigmoid
 
 
 class LogisticRegression:

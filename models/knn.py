@@ -1,7 +1,7 @@
 import numpy as np
 
 from scipy.stats import mode
-from util import dist
+from models.util import dist
 
 
 class KNN:

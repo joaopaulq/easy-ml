@@ -1,6 +1,6 @@
 import numpy as np
 
-from util import add_intercept
+from models.util import add_intercept
 
 
 class LinearRegression:

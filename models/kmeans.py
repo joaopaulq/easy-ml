@@ -1,6 +1,6 @@
 import numpy as np
 
-from util import dist
+from models.util import dist
 
 
 class KMeans:
