@@ -1,6 +1,3 @@
-# ml-scratch
-😷
-
 ## Models
 * **Supervised Learning**
   * [K-Nearest Neighbors](https://github.com/joaopaulq/ml-scratch/blob/main/models/knn.py) 
