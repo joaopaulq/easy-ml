@@ -1,6 +1,7 @@
 import numpy as np
 
 from models.util import sigmoid
+from models.losses import cross_entropy
 
 
 class LogisticRegression:
@@ -17,8 +18,7 @@ class LogisticRegression:
     """
 
     def __init__(self):
-        self.w = None
-        self.b = 0
+        self.w, self.b = None, 0
 
 
     def fit(self, X, y, max_iter=1000, verbose=False):
@@ -57,7 +57,7 @@ class LogisticRegression:
                 break
             
             if verbose and i % 10 == 0:
-                J = self._loss(y, h_x)
+                J = cross_entropy(y, h_x)
                 print(f"Loss on iteration {i}: {J}")
         
 
@@ -71,17 +71,4 @@ class LogisticRegression:
             h_x: Predictions of shape (m,). NumPy array.
         """
         z = X @ self.w + self.b
-        return sigmoid(z)
-
-
-    def _loss(self, y, h_x):
-        """Function that measures the quality of the model.
-
-        Args:
-            y: Targets values of shape (m,). NumPy array.
-            h_x: Predict values of shape (m,). NumPy array.
-
-        Returns:
-            J: How close the h_x are to the corresponding y. Float.
-        """
-        return np.mean(y*np.log(h_x) + (1-y)*np.log(1-h_x)) # Cross-entropy.
+        return sigmoid(z) # Apply the sigmoid function.

@@ -1,5 +1,7 @@
 import numpy as np
 
+from models.losses import zero_one
+
 
 class Perceptron:
     """Class for the Perceptron model.
@@ -15,8 +17,7 @@ class Perceptron:
     """
 
     def __init__(self):
-        self.w = None
-        self.b = 0
+        self.w, self.b = None, 0
 
 
     def fit(self, X, y, lr=0.1, max_iter=1000, verbose=False):
@@ -50,7 +51,7 @@ class Perceptron:
                 break
             
             if verbose and i % 10 == 0:
-                J = self._loss(y, h_x)
+                J = zero_one(y, h_x)
                 print(f"Loss on iteration {i}: {J}")
         
 
@@ -65,16 +66,3 @@ class Perceptron:
         """
         z = X @ self.w + self.b
         return np.where(z >= 0, 1, 0) # Apply the threshold function.
-
-
-    def _loss(self, y, h_x):
-        """Function that measures the quality of the model.
-
-        Args:
-            y: Targets values of shape (m,). NumPy array.
-            h_x: Predict values of shape (m,). NumPy array.
-
-        Returns:
-            J: How close the h_x are to the corresponding y. Float.
-        """
-        return np.sum(y != h_x) # 0-1 loss.

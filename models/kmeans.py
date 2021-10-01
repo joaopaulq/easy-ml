@@ -19,8 +19,7 @@ class KMeans:
 
     def __init__(self, k=1):
         self.k = k
-        self.centroids = None
-        self.clusters = None
+        self.centroids, self.clusters = None, None
 
 
     def fit(self, X, n_init=100, max_iter=1000):

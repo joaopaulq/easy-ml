@@ -17,8 +17,7 @@ class LinearRegression:
     """
 
     def __init__(self):
-        self.w = None
-        self.b = 0
+        self.w, self.b = None, 0
 
 
     def fit(self, X, y):
@@ -30,8 +29,7 @@ class LinearRegression:
         """
         X = add_intercept(X)
         theta = np.linalg.pinv(X.T @ X) @ X.T @ y
-        self.w = theta[1:]
-        self.b = theta[0]
+        self.w, self.b = theta[1:], theta[0]
 
 
     def predict(self, X):

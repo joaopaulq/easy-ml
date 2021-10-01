@@ -20,8 +20,7 @@ class KNN:
 
     def __init__(self, k=1):
         self.k = k
-        self.X = None 
-        self.y = None
+        self.X, self.y = None, None
 
 
     def fit(self, X, y):
