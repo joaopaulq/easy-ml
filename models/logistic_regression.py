@@ -1,7 +1,6 @@
 import numpy as np
 
-from models.util import sigmoid
-from models.losses import cross_entropy
+from models.util import sigmoid, loss
 
 
 class LogisticRegression:
@@ -57,7 +56,7 @@ class LogisticRegression:
                 break
             
             if verbose and i % 10 == 0:
-                J = cross_entropy(y, h_x)
+                J = loss(y, h_x, measure='cross-entropy')
                 print(f"Loss on iteration {i}: {J}")
         
 

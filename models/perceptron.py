@@ -1,6 +1,6 @@
 import numpy as np
 
-from models.losses import zero_one
+from models.util import loss
 
 
 class Perceptron:
@@ -51,7 +51,7 @@ class Perceptron:
                 break
             
             if verbose and i % 10 == 0:
-                J = zero_one(y, h_x)
+                J = loss(y, h_x, measure='01')
                 print(f"Loss on iteration {i}: {J}")
         
 
