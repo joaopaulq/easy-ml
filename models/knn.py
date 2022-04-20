@@ -51,6 +51,6 @@ class KNN:
             neighbors = np.argsort(D)[:self.k]
             h_x[i] = self.y[neighbors]
         
-        # Assign each object to the class most common among its neighbors.
+        # Assign each object to the most common class among its neighbors.
         return mode(h_x, axis=1)[0]
     
