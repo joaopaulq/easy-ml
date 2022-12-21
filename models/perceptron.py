@@ -1,23 +1,22 @@
 import numpy as np
 
-from models.util import loss
-
 
 class Perceptron:
     """Class for the Perceptron model.
     
     Attributes:
-        w: The weights. NumPy array.
+        w: The weights of shape (m,). NumPy array.
         b: The intercept term (bias). Float.
 
     Example of usage:
         > clf = Perceptron()
         > clf.fit(X_train, y_train)
-        > clf.predict(X_valid)
+        > clf.predict(X_test)
     """
 
     def __init__(self):
-        self.w, self.b = None, 0
+        self.w = None
+        self.b = 0
 
 
     def fit(self, X, y, lr=0.1, max_iter=1000, verbose=False):
@@ -45,14 +44,14 @@ class Perceptron:
             prev_w, prev_b = self.w, self.b
             self.w = self.w + lr*dJw
             self.b = self.b + lr*dJb
-            
+
+            if verbose and i % 10 == 0:
+                J = self._loss(y, h_x)
+                print(f"Loss on iteration {i}: {J}")
+                        
             # Stop if converges.
             if np.allclose(prev_w, self.w) and np.isclose(prev_b, self.b):
                 break
-            
-            if verbose and i % 10 == 0:
-                J = loss(y, h_x, measure='01')
-                print(f"Loss on iteration {i}: {J}")
         
 
     def predict(self, X):
@@ -66,3 +65,19 @@ class Perceptron:
         """
         z = X @ self.w + self.b
         return np.where(z >= 0, 1, 0) # Apply the threshold function.
+    
+
+
+    def loss(self, y, h_x):
+        """Function that measures the quality of the model.
+        
+        Args:
+            y: Targets values of shape (m,). NumPy array.
+            h_x: Predict values of shape (m,). NumPy array.
+            measure: Loss measure.
+        
+        Returns:
+            J: How close the h_x are to the corresponding y. Float.
+        """
+        # 0-1 loss.
+        return np.sum(y != h_x)

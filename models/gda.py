@@ -15,7 +15,7 @@ class GDA:
     Example of usage:
         > clf = GDA()
         > clf.fit(X_train, y_train)
-        > clf.predict(X_valid)
+        > clf.predict(X_test)
     """
 
     def __init__(self):
@@ -33,8 +33,10 @@ class GDA:
             y: Training examples labels of shape (m,). NumPy array.
         """
         self.phi = np.mean(y == 0)
-        self.mu_0 = np.mean(X[y == 0], axis=0)
+        
+        self.mu_0 = np.mean(X[y == 0], axis=0) 
         self.mu_1 = np.mean(X[y == 1], axis=0)
+
         t0 = X[y == 0] - self.mu_0
         t1 = X[y == 1] - self.mu_1
         self.sigma = ((t0.T @ t0) + (t1.T @ t1)) / X.shape[0]

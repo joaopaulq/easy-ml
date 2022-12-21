@@ -1,7 +1,5 @@
 import numpy as np
 
-from models.util import sigmoid, loss
-
 
 class LogisticRegression:
     """Class for the Logistic Regression model.
@@ -13,11 +11,12 @@ class LogisticRegression:
     Example of usage:
         > clf = LogisticRegression()
         > clf.fit(X_train, y_train)
-        > clf.predict(X_valid)
+        > clf.predict(X_test)
     """
 
     def __init__(self):
-        self.w, self.b = None, 0
+        self.w = None
+        self.b = 0
 
 
     def fit(self, X, y, max_iter=1000, verbose=False):
@@ -51,13 +50,13 @@ class LogisticRegression:
             self.w = self.w - H_inv @ dJw
             self.b = self.b - (dJb / d2Jb)
             
+            if verbose and i % 10 == 0:
+                J = self._loss(y, h_x)
+                print(f"Loss on iteration {i}: {J}")
+            
             # Stop if converges.
             if np.allclose(prev_w, self.w) and np.isclose(prev_b, self.b):
                 break
-            
-            if verbose and i % 10 == 0:
-                J = loss(y, h_x, measure='cross-entropy')
-                print(f"Loss on iteration {i}: {J}")
         
 
     def predict(self, X):
@@ -70,4 +69,23 @@ class LogisticRegression:
             h_x: Predictions of shape (m,). NumPy array.
         """
         z = X @ self.w + self.b
-        return sigmoid(z) # Apply the sigmoid function.
+        return self._sigmoid(z) # Apply the sigmoid function.
+    
+    
+    def loss(self, y, h_x):
+        """Function that measures the quality of the model.
+        
+        Args:
+            y: Targets values of shape (m,). NumPy array.
+            h_x: Predict values of shape (m,). NumPy array.
+        
+        Returns:
+            J: How close the h_x are to the corresponding y. Float.
+        """
+        # Cross-entropy loss.
+        return np.mean(y * np.log(h_x) + (1-y) * np.log(1-h_x))
+    
+
+    def _sigmoid(z):
+        """Computes the sigmoid function on a NumPy array."""
+        return 1.0 / (1 + np.exp(-z))
