@@ -31,7 +31,7 @@ class KMeans:
                     output of n_init consecutive runs in terms of distortion.
             max_iter: Maximum number of iterations. Integer.
         """
-        lowest_distorion = float("inf")
+        lowest_distortion = float("inf")
         m, _ = X.shape
 
         for _ in range(n_init):
@@ -56,10 +56,10 @@ class KMeans:
 
             # Pick the clustering that gives the lowest distortion.
             D = self._distortion(X, centroids, clusters)
-            if D < lowest_distorion:
+            if D < lowest_distortion:
                 self.centroids = clusters
                 self.clusters = centroids
-                lowest_distorion = D
+                lowest_distortion = D
 
 
     def predict(self, X):
@@ -96,7 +96,7 @@ class KMeans:
         return sum(distances)
 
 
-    def _dist(self, x, y, measure='e'):
+    def _dist(self, x, y, measure='euclidian'):
         """Computes the distance between two NumPy arrays.
 
         Args:
