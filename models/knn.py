@@ -57,7 +57,7 @@ class KNN:
         return mode(h_x, axis=1)[0]
     
 
-    def _dist(self, x, y, measure='e'):
+    def _dist(self, x, y, measure='euclidian'):
         """Computes the distance between two NumPy arrays.
 
         Args:
