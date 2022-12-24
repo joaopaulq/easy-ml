@@ -26,11 +26,11 @@ class GDA:
 
 
     def fit(self, X, y):
-        """Find the maximum likelihood estimate of the parameters.
+        """Compute gaussian parameters.
 
         Args:
             X: Training examples of shape (m, n). NumPy array.
-            y: Training examples labels of shape (m,). NumPy array.
+            y: Training labels of shape (m,). NumPy array.
         """
         self.phi = np.mean(y == 0)
         

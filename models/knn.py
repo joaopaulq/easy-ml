@@ -8,8 +8,7 @@ class KNN:
     
     Attributes:
         k: Number of neighbors. Integer. Default=1.
-        X: Training examples of shape (m, n). NumPy array.
-        y: Training examples labels of shape (m,). NumPy array.
+        measure: Distance measure. ['euclidian', 'manhattan']
 
     Example of usage:
         > clf = KNN()
@@ -17,8 +16,9 @@ class KNN:
         > clf.predict(X_test)
     """
 
-    def __init__(self, k=1):
+    def __init__(self, k=1, measure='euclidian'):
         self.k = k
+        self.measure = measure
         self.X = None
         self.y = None
 
@@ -57,21 +57,20 @@ class KNN:
         return mode(h_x, axis=1)[0]
     
 
-    def _dist(self, x, y, measure='euclidian'):
+    def _dist(self, x, y):
         """Computes the distance between two NumPy arrays.
 
         Args:
             x: A NumPy array of shape (m,).
             y: A NumPy array of shape (m,)
-            measure: Distance measure. [euclidian, manhattan]
 
         Returns:
             Distance between x and y using the given measure. Float.
         """
-        if measure == 'euclidian':
+        if self.measure == 'euclidian':
             return np.linalg.norm(x - y)
-        elif measure == 'manhattan':
+        elif self.measure == 'manhattan':
             return np.sum(np.abs(x - y))
         else:
-            raise NotImplementedError(f'Measure {measure} not implemented')
+            raise NotImplementedError(f'Measure {self.measure} not implemented')
     
