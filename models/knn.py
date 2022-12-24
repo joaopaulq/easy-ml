@@ -63,7 +63,7 @@ class KNN:
         Args:
             x: A NumPy array of shape (m,).
             y: A NumPy array of shape (m,)
-            measure: Distance measure. Float
+            measure: Distance measure. [euclidian, manhattan]
 
         Returns:
             Distance between x and y using the given measure. Float.
