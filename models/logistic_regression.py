@@ -25,20 +25,21 @@ class LogisticRegression:
         Args:
             X: Training examples of shape (m, n). NumPy array.
             y: Training examples labels of shape (m,). NumPy array.
-            max_iter: Maximum number of iterations. Integer.
-            verbose: Print loss values during training. Boolean.
+            max_iter: Maximum number of iterations. Integer. Default=1000.
+            verbose: Print loss during training. Boolean. Default=False.
         """
         m, n = X.shape
-        self.w = np.zeros(n) # Start the weights with the zero vector.
+        # Start the weights with the zero vector.
+        self.w = np.zeros(n) 
         
         for i in range(max_iter):
             # Make a prediction.
             h_x = self.predict(X)
             
             # Compute the gradient.
-            dJw = (X.T @ (y - h_x)) / m # Derivative of loss wrt weights.
-            dJb = np.sum(y - h_x) / m # Derivative of loss wrt bias.
-            d2Jb = -m # Second derivative of loss wrt bias.
+            dJw = (X.T @ (y - h_x)) / m
+            dJb = np.sum(y - h_x) / m
+            d2Jb = -m
             
             # Compute the hessian and its inverse.
             D = np.diag(h_x * (1 - h_x))
@@ -50,8 +51,8 @@ class LogisticRegression:
             self.w = self.w - H_inv @ dJw
             self.b = self.b - (dJb / d2Jb)
             
-            if verbose and i % 10 == 0:
-                J = self._loss(y, h_x)
+            if verbose and i % 100 == 0:
+                J = self.loss(y, h_x)
                 print(f"Loss on iteration {i}: {J}")
             
             # Stop if converges.
@@ -69,7 +70,10 @@ class LogisticRegression:
             h_x: Predictions of shape (m,). NumPy array.
         """
         z = X @ self.w + self.b
-        return self._sigmoid(z) # Apply the sigmoid function.
+        # Apply the sigmoid function.
+        h_x = self.sigmoid(z)
+
+        return h_x
     
     
     def loss(self, y, h_x):
@@ -83,9 +87,11 @@ class LogisticRegression:
             J: How close the h_x are to the corresponding y. Float.
         """
         # Cross-entropy loss.
-        return np.mean(y * np.log(h_x) + (1-y) * np.log(1-h_x))
+        J = np.mean(y * np.log(h_x) + (1-y) * np.log(1-h_x))
+
+        return J
     
 
-    def _sigmoid(z):
+    def sigmoid(self, z):
         """Computes the sigmoid function on a NumPy array."""
         return 1.0 / (1 + np.exp(-z))

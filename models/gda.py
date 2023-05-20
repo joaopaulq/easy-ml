@@ -19,7 +19,7 @@ class GDA:
     """
 
     def __init__(self):
-        self.phi = 0
+        self.phi = None
         self.mu_0 = None
         self.mu_1 = None
         self.sigma = None
@@ -61,5 +61,6 @@ class GDA:
         # Use Bayes rule to derive the distribution on y given x. (Posterior).
         p0_x = p0 * px_0
         p1_x = p1 * px_1
+        h_x = np.argmax([p0_x, p1_x], axis=0)
 
-        return np.argmax([p0_x, p1_x], axis=0)
+        return h_x

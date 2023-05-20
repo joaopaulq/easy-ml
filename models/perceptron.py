@@ -25,28 +25,29 @@ class Perceptron:
         Args:
             X: Training examples of shape (m, n). NumPy array.
             y: Training examples labels of shape (m,). NumPy array.
-            lr: The learning rate. Float.
-            max_iter: Maximum number of iterations. Integer.
-            verbose: Print loss values during training. Boolean.
+            lr: The learning rate. Float. Default=0.1.
+            max_iter: Maximum number of iterations. Integer. Default=1000.
+            verbose: Print loss during training. Boolean. Default=False.
         """
         m, n = X.shape
-        self.w = np.zeros(n) # Start the weights with the zero vector.
+        # Start the weights with the zero vector.
+        self.w = np.zeros(n) 
 
         for i in range(max_iter):
             # Make a prediction.
             h_x = self.predict(X)
             
             # Compute the gradient.
-            dJw = (X.T @ (y - h_x)) / m # Derivative of loss wrt weights.
-            dJb = np.sum(y - h_x) / m # Derivative of loss wrt bias.
+            dJw = (X.T @ (y - h_x)) / m
+            dJb = np.sum(y - h_x) / m
             
             # Update rule.
             prev_w, prev_b = self.w, self.b
             self.w = self.w + lr*dJw
             self.b = self.b + lr*dJb
 
-            if verbose and i % 10 == 0:
-                J = self._loss(y, h_x)
+            if verbose and i % 100 == 0:
+                J = self.loss(y, h_x)
                 print(f"Loss on iteration {i}: {J}")
                         
             # Stop if converges.
@@ -64,7 +65,10 @@ class Perceptron:
             h_x: Predictions of shape (m,). NumPy array.
         """
         z = X @ self.w + self.b
-        return np.where(z >= 0, 1, 0) # Apply the threshold function.
+        # Apply the threshold function.
+        h_x = np.where(z >= 0, 1, 0) 
+
+        return h_x
     
 
 
@@ -74,10 +78,11 @@ class Perceptron:
         Args:
             y: Targets values of shape (m,). NumPy array.
             h_x: Predict values of shape (m,). NumPy array.
-            measure: Loss measure.
         
         Returns:
             J: How close the h_x are to the corresponding y. Float.
         """
         # 0-1 loss.
-        return np.sum(y != h_x)
+        J = np.sum(y != h_x)
+
+        return J

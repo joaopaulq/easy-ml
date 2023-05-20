@@ -7,8 +7,7 @@ class KNN:
     """Class for the K-Nearest Neighbors (Classification) model.
     
     Attributes:
-        k: Number of neighbors. Integer. Default=1.
-        measure: Distance measure. ['euclidian', 'manhattan']
+        k: Number of neighbors. Integer. Default=2.
 
     Example of usage:
         > clf = KNN()
@@ -16,11 +15,8 @@ class KNN:
         > clf.predict(X_test)
     """
 
-    def __init__(self, k=1, measure='euclidian'):
+    def __init__(self, k=2):
         self.k = k
-        self.measure = measure
-        self.X = None
-        self.y = None
 
 
     def fit(self, X, y):
@@ -47,30 +43,14 @@ class KNN:
 
         for i, data in enumerate(X):
             # Compute the distance to each training example.
-            distances = [self._dist(data, x) for x in self.X]
+            distances = [np.linalg.norm(data - x) for x in self.X]
             # Take the top k nearest neighbors.
             neighbors = np.argsort(distances)
             top_k = neighbors[:self.k]
             h_x[i] = self.y[top_k]
         
         # Assign each object to the most common class among its neighbors.
-        return mode(h_x, axis=1)[0]
-    
+        h_x = mode(h_x, axis=1, keepdims=False)[0]
 
-    def _dist(self, x, y):
-        """Computes the distance between two NumPy arrays.
-
-        Args:
-            x: A NumPy array of shape (m,).
-            y: A NumPy array of shape (m,)
-
-        Returns:
-            Distance between x and y using the given measure. Float.
-        """
-        if self.measure == 'euclidian':
-            return np.linalg.norm(x - y)
-        elif self.measure == 'manhattan':
-            return np.sum(np.abs(x - y))
-        else:
-            raise NotImplementedError(f'Measure {self.measure} not implemented')
+        return h_x 
     

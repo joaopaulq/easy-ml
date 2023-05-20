@@ -26,9 +26,10 @@ class LinearRegression:
             X: Training examples of shape (m, n). NumPy array.
             y: Training examples labels of shape (m,). NumPy array.
         """
-        X = self._add_intercept(X)
+        X = self.add_intercept(X)
         theta = np.linalg.pinv(X.T @ X) @ X.T @ y
-        self.w, self.b = theta[1:], theta[0]
+        self.w = theta[1:]
+        self.b = theta[0]
 
 
     def predict(self, X):
@@ -40,17 +41,19 @@ class LinearRegression:
         Returns:
             h_x: Predictions of shape (m,). NumPy array.
         """
-        return X @ self.w + self.b
+        h_x = X @ self.w + self.b
+
+        return h_x
 
 
-    def _add_intercept(self, X):
+    def add_intercept(self, X):
         """Add intercept to a 2D NumPy array.
 
         Args:
-            X: 2D NumPy array.
+            X: Inputs of shape (m, n). NumPy array.
 
         Returns:
-            new_x: New 2D NumPy array, same as X, with 1's in the 0th column.
+            new_x: X with the intercept term. shape (m, n+1). NumPy array.
         """
         m, n = X.shape
         new_x = np.ones((m, n+1), dtype=X.dtype)
