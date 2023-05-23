@@ -53,7 +53,7 @@ class LinearRegression:
             X: Inputs of shape (m, n). NumPy array.
 
         Returns:
-            new_x: X with the intercept term. shape (m, n+1). NumPy array.
+            new_x: X with the intercept term. Shape (m, n+1). NumPy array.
         """
         m, n = X.shape
         new_x = np.ones((m, n+1), dtype=X.dtype)
