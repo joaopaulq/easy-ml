@@ -1,18 +1,18 @@
 ## models
-* **Supervised Learning**
-  * [K-Nearest Neighbors](https://github.com/joaopaulq/ml/blob/main/models/knn.py) 
-  * [Linear Regression](https://github.com/joaopaulq/ml/blob/main/models/linear_regression.py)
-  * [Logistic Regression](https://github.com/joaopaulq/ml/blob/main/models/logistic_regression.py)
-  * [Perceptron](https://github.com/joaopaulq/ml/blob/main/models/perceptron.py)
-  * [Gaussian Discriminant Analysis](https://github.com/joaopaulq/ml/blob/main/models/gda.py)
-* **Unsupervised Learning**
-  * [K-Means](https://github.com/joaopaulq/ml/blob/main/models/kmeans.py)
+* **supervised learning**
+  * [k-nearest neighbors](https://github.com/joaopaulq/ml/blob/main/models/knn.py) 
+  * [linear regression](https://github.com/joaopaulq/ml/blob/main/models/linear_regression.py)
+  * [logistic regression](https://github.com/joaopaulq/ml/blob/main/models/logistic_regression.py)
+  * [perceptron](https://github.com/joaopaulq/ml/blob/main/models/perceptron.py)
+  * [gaussian discriminant analysis](https://github.com/joaopaulq/ml/blob/main/models/gda.py)
+* **unsupervised learning**
+  * [k-means](https://github.com/joaopaulq/ml/blob/main/models/kmeans.py)
 
 ## notebooks
-* [Classification](https://github.com/joaopaulq/ml/blob/main/notebooks/classification.ipynb)
-* [Regression](https://github.com/joaopaulq/ml/blob/main/notebooks/regression.ipynb)
-* [Clustering](https://github.com/joaopaulq/ml/blob/main/notebooks/clustering.ipynb)
+* [classification](https://github.com/joaopaulq/ml/blob/main/notebooks/classification.ipynb)
+* [regression](https://github.com/joaopaulq/ml/blob/main/notebooks/regression.ipynb)
+* [clustering](https://github.com/joaopaulq/ml/blob/main/notebooks/clustering.ipynb)
 
 ## resources
-* [Notes from Stanford CS299 - Machine Learning](http://cs229.stanford.edu/notes2020fall/notes2020fall/)
-* [scikit-learn User Guide](https://scikit-learn.org/stable/user_guide.html)
+* [notes from stanford cs299](http://cs229.stanford.edu/notes2020fall/notes2020fall/)
+* [scikit-learn user guide](https://scikit-learn.org/stable/user_guide.html)
