@@ -1,5 +1,5 @@
 # easy-ml
-Collection of classical machine learning algorithms implemented from scratch in the simplest way possibl. Each algorithm in this repository is designed with simplicity and clarity in mind, making it an ideal resource for beginners and those who want to explore the inner workings of machine learning models.
+A collection of classical machine learning algorithms implemented from scratch in the simplest way possibl. Each algorithm in this repository is designed with simplicity and clarity in mind, making it an ideal resource for beginners and those who want to explore the inner workings of machine learning models.
 
 ## models
 * **supervised learning**
